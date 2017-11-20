@@ -1,0 +1,1 @@
+The /history folder will contain generated .csv files, holding the version history of each site
