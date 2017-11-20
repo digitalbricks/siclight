@@ -41,12 +41,6 @@ $siclight_version = "1.1";
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <?php
-        require_once 'sites-config.php';
-        require_once 'includes/functions.php';
-    ?>
-
     <meta charset="utf-8">
     <title>Site Info Center Light</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,22 +51,34 @@ $siclight_version = "1.1";
 
     <div class="uk-container">
 
-        <h1>Site Info Center LIGHT <small><?php echo $siclight_version; ?></small></h1>
+        <h1>Site Info Center LIGHT <small><?=$siclight_version?></small></h1>
 
-        <div class="uk-card uk-card-default">
-            <div class="uk-card-header">
-                <div uk-grid class="uk-child-width-expand">
-                    <div><h2 class="uk-card-title">Active Sites</h2></div>
-                    <div class="refresh-all"><button class="refresh-all uk-button uk-button-danger" type="button" uk-tooltip title="Refresh all active sites"><span uk-icon="icon: refresh"></span></button></div>
-                </div>
-            </div>
-            <div class="uk-card-body">
-                <?=ActiveSitesTable($sites)?>
-            </div>
-        </div>
+        <?php
+            if(!file_exists('sites-config.php')){
+                echo "
+                <div uk-alert class='uk-alert-danger'>
+                    <strong>sites-config.php not found!</strong> In order to create this file, just rename the sites-config.NEW.php
+                </div>\n";
+            } else {
+                require_once 'sites-config.php';
+                require_once 'includes/functions.php';
 
-
-        <?php echo InactiveSites($sites); ?>
+                echo "
+                <div class='uk-card uk-card-default'>
+                    <div class='uk-card-header'>
+                        <div uk-grid class='uk-child-width-expand'>
+                            <div><h2 class='uk-card-title'>Active Sites</h2></div>
+                            <div class='refresh-all'><button class='refresh-all uk-button uk-button-danger' type='button' uk-tooltip title='Refresh all active sites'><span uk-icon='icon: refresh'></span></button></div>
+                        </div>
+                    </div>
+                    <div class='uk-card-body'>
+                        ".ActiveSitesTable($sites)."
+                    </div>
+                </div>\n";
+                
+                echo InactiveSites($sites);   
+            }
+        ?>
 
     </div>
 
