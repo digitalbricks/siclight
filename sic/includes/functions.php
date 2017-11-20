@@ -18,7 +18,7 @@ function ActiveSitesTable($sites){
 
     $table ='';
     if(count($sites)){
-
+        $table.= "<div class='uk-overflow-auto'>\n";
         $table.= "<table class='sites uk-table uk-table-divider'>\n";
         $table.= " <thead>\n";
         $table.= "    <tr>\n";
@@ -49,10 +49,14 @@ function ActiveSitesTable($sites){
         }
         $table.= " </tbody>\n";
         $table.= "</table>\n";
+        $table.= "</div>\n"; // clsoing .uk-overflow-auto
 
         return $table;
     } else {
-        return false;
+        return "
+            <div uk-alert class='uk-alert-danger'>
+                <strong>No sites configured!</strong> The sites-Array, configured in in sites-config.php seems to have no entries.
+            </div>\n";
     }
 
 }
@@ -115,9 +119,11 @@ function InactiveSites($sites){
             $output.= "         <h2 class='uk-card-title'>Inactive Sites <small>(still not or no longer maintained)</small></h2>\n";
             $output.= "     </div>\n"; // closing .uk-card-header
             $output.= "     <div class='uk-card-body'>\n";
+            $output.= "         <div class='uk-overflow-auto'>\n";
             $output.=$theader;
             $output.=$rows;
             $output.=$tfooter;
+            $output.= "         </div>\n"; // closing .uk-overflow-auto
             $output.= "     </div>\n"; // closing .uk-card-body
             $output.="</div>\n";
         }

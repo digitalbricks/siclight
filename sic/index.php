@@ -3,6 +3,11 @@
  * author: André Herdling (andreherdling.de)
  *
  * CHANGELOG:
+ * v1.2
+ * 20.11.2017
+ * - added check for sites-config.php and messege how to create
+ * – made tables responsove with .uk-overflow-auto
+ *
  * v1.1
  * 19.11.2017
  * - introduced progressbar for ajax queue
@@ -35,7 +40,7 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
 
-$siclight_version = "1.1";
+$siclight_version = "1.2";
 
 ?>
 <!DOCTYPE html>
