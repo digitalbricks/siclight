@@ -98,3 +98,38 @@ a.disabled{
       transform: rotate(360deg);
     }
   }
+
+
+  /*print styles*/
+  @media print{
+    html{
+        font-size: 10pt !important;
+        padding: 10mm;
+    }
+    body{
+        padding: 0;
+    }
+    h1{
+        font-size: 20pt;
+        margin-top: 0;
+    }
+    h2{
+        font-size: 15pt;
+    }
+    .uk-table th{
+        font-size: 10pt;
+        font-weight: bold;
+        padding: 1mm;
+    }
+    .uk-table td{
+        padding: 1mm;
+        font-size: 10pt;
+    }
+    td.actions,.uk-button,.licenses{
+        display: none !important;
+    }
+    .uk-card-body,.uk-card-header{
+        padding: 0;
+    }
+
+  }
