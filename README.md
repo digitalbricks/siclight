@@ -46,6 +46,20 @@ $sites = array(
 
 If you are done, place the `/sic` folder (you may rename it, of course) on your local server where you can reach it now and in the future. Try reaching SIC with your local URL in the browser - if a list of your configured sites is shown, everything is fine.
 
+### Currently supported CMS
+
+| System identifier | CMS                                    | available since satellite version |
+|-------------------|----------------------------------------|-----------------------------------|
+| STATIC            | (static site, just return PHP version) | v0.1                              |
+| LEPTON            | Lepton CMS, below version 2.4          | v0.1                              |
+| WEBSITEBAKER      | WebsiteBaker                           | v0.2                              |
+| WORDPRESS         | WordPress                              | v0.3                              |
+| WBCE              | WBCE                                   | v0.4                              |
+| PROCESSWIRE       | ProcessWire                            | v0.5                              |
+| MODX              | MODX Revolution                        | v0.6                              |
+| GETSIMPLE         | GetSimple CMS                          | v0.7                              |
+| LEPTON24          | Lepton CMS, since version 2.4          | v0.8                              |
+
 ## Configuration: Satellite 
 Place a copy of the `satellite.php` (to be found in folder `/satellite` in the download) in the root directory of all your configured sites via FTP.  Update the `$sat_secret` in the satellite to the one you configured for the corresponding site in SIC (don’t use the same secret across all your sites!) and make sure the satellite has a function for your CMS (if not, read the section “Add further CMS functions to satellite”).  You are done.
 
@@ -56,5 +70,5 @@ The satellite script comes with a handful functions for getting version info fro
 
 The satellite script is quite easy to understand: After checking that the shared secret provided from SIC matches that one set in the satellite, a simple `switch` functions checks the `sys` string provided from SIC an determines which function to be run.
 
-So if you want to add your CMS, just write a new function, deliberate a `sys` string and add both to the `switch` function of the satellite. Afterward you can use your new imagined `sys` string when configuring sites in `config-sites.php` in SIC and the satellite will run your new function.
+So if you want to add your CMS, just write a new function, deliberate a `sys` string (system identifier) and add both to the `switch` function of the satellite. Afterward you can use your new imagined `sys` string when configuring sites in `config-sites.php` in SIC and the satellite will run your new function.
 
