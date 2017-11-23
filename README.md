@@ -32,7 +32,7 @@ After downloading the project, you will find a file `sites-config.NEW.php` in th
 $sites = array( 
     "example.com" => array(                                     // human readable title of the site to monitor
         "url"       => "https://www.example.com/satellite.php", // full URL of the satellite script
-        "sys"       => "ProcessWire",                           // system identifier, the satellite has a function for
+        "sys"       => "PROCESSWIRE",                           // system identifier, the satellite has a function for
         "secret"    => "T0tallY5ecret",                         // the shared secret of the site, HAVE TO match the one in the satellite
         "inact"     => false                                    // set to "true" if the site should not longer monitored but you want access to the history
     ),
