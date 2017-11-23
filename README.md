@@ -1,6 +1,8 @@
 # Site Info Center LIGHT
 **Getting information about sites CMS and PHP versions with one click.**
 
+_NOTE: A version of this text in german language, alongside with some screenshots, can be found on my blog: [ https://www.vektorkneter.de/site-information-center-light]( https://www.vektorkneter.de/site-information-center-light)_
+
 If you are a web design / development agency or a freelancer you might be familiar with this scenario: 
 
 You have a bunch of sites with a couple of different content management systems and different server configurations under your care. Maybe hosted on different shared servers, managed by your client himself. And you never know exactly which CMS version and wich PHP version is currently running on each site without having to maintain an internal list. Sounds familiar?
