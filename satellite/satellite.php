@@ -143,7 +143,7 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
 
 /**
  * sat_PAGEKIT
- * Gets version of Shopware since version 1
+ * Gets version of Pagekit since version 1
  */
 function sat_PAGEKIT(){
    global $siteinfo;
