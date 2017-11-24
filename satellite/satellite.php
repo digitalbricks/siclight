@@ -41,10 +41,14 @@ $sat_secret = "YOUR_SECRET";
 /*--- SATELLITE (no need for changes)------------------------*/
 // satellite version: The current version of the satellite
 // Will be displayed in your SIC
-$siteinfo['sat_ver'] = "0.8";
+$siteinfo['sat_ver'] = "0.9";
 
 /**
 * CHANGELOG
+* v0.9
+* 24.11.2017
+* added sat_SHOPWARE for Shopware since version 5
+* added sat_PAGEKIT for Pagekit since version 1
 *
 * v0.8
 * 27.07.2017
@@ -118,6 +122,12 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
         case "STATIC":
             $siteinfo['sys_ver'] = "static";
             break;
+        case "SHOPWARE":
+            sat_SHOPWARE();
+            break;
+        case "SHOPWARE":
+            sat_PAGEKIT();
+            break;
         default:
             http_response_code(400);
             echo "System not valid.";
@@ -133,6 +143,34 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
     http_response_code(400);
     echo "No valid data";
 };
+
+
+/**
+ * sat_PAGEKIT
+ */
+function sat_PAGEKIT(){
+   global $siteinfo;
+	  // config file requires a `$path`, setting an empty path variable
+	  $path = '';
+	  $config = require('app/system/config.php');
+	  $version = $config['application']['version'];
+
+	  $siteinfo['sys_ver'] = $version;
+}
+
+
+/**
+ * sat_SHOPWARE
+ */
+function sat_SHOPWARE(){
+	  global $siteinfo;
+
+	  require __DIR__ . '/autoload.php';
+	  $environment = getenv('SHOPWARE_ENV') ?: getenv('REDIRECT_SHOPWARE_ENV') ?: 'production';
+	  $kernel = new \Shopware\Kernel($environment, $environment !== 'production');
+	
+	  $siteinfo['sys_ver'] = $kernel::VERSION;
+}
 
 
 /**
