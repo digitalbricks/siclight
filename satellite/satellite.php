@@ -36,7 +36,7 @@ $sat_secret = "YOUR_SECRET";
 /*--- SATELLITE (no need for changes)------------------------*/
 // satellite version: The current version of the satellite
 // Will be displayed in your SIC
-$siteinfo['sat_ver'] = "0.10";
+$siteinfo['sat_ver'] = "0.11";
 
 /**
 * CHANGELOG
@@ -132,7 +132,10 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
             break;
         case "BLACKCAT":
             $siteinfo['sys_ver'] = sat_BLACKCAT();
-            break;    
+            break;
+        case "JOOMLA":
+            $siteinfo['sys_ver'] = sat_JOOMLA();
+            break;          
         default:
             http_response_code(400);
             echo "System not valid.";
@@ -148,6 +151,27 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
     http_response_code(400);
     echo "No valid data";
 };
+
+
+/**
+ * sat_JOOMLA
+ * Gets version of Joomla! CMS, tested with 3.8.2
+ */
+function sat_JOOMLA(){
+    // needs to be defined
+    define('_JEXEC', 1);
+    if (!defined('_JDEFINES')){
+        define('JPATH_BASE', __DIR__);
+        require_once JPATH_BASE . '/includes/defines.php';
+    }
+    require_once JPATH_BASE . '/includes/framework.php';
+
+    // create JVersion object
+    $version = new JVersion();
+
+    return $version->getShortVersion();
+ }
+
 
 /**
  * sat_BLACKCAT
