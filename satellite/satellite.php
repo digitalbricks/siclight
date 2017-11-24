@@ -124,6 +124,9 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
         case "PAGEKIT":
             sat_PAGEKIT();
             break;
+        case "BLACKCAT":
+            sat_BLACKCAT();
+            break;    
         default:
             http_response_code(400);
             echo "System not valid.";
@@ -140,19 +143,45 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
     echo "No valid data";
 };
 
+/**
+ * sat_BLACKCAT
+ * Gets version of BlackCat CMS, 1.x series
+ */
+function sat_BLACKCAT(){
+    global $siteinfo;
+    // load config and framework
+    require_once('config.php');
+    include CAT_PATH.'/framework/frontend.functions.php';
+
+    // query database
+    $result = CAT_Helper_Page::getInstance()->db()->query(
+        "SELECT `value` FROM `:prefix:settings` WHERE `name`=:string",
+        array('string'=>'cat_version')
+    );
+
+    if($result&&$result->numRows()>0){
+        // results to array
+        $fetch = $result->fetch(PDO::FETCH_ASSOC);
+        $siteinfo['sys_ver'] = $fetch['value'];
+    } else {
+        $siteinfo['sys_ver'] = "not found";
+    }
+    
+ }
+
 
 /**
  * sat_PAGEKIT
  * Gets version of Pagekit since version 1
  */
 function sat_PAGEKIT(){
-   global $siteinfo;
-	  // config file requires a `$path`, setting an empty path variable
-	  $path = '';
-	  $config = require('app/system/config.php');
-	  $version = $config['application']['version'];
+    global $siteinfo;
+    // config file requires a `$path`, setting an empty path variable
+    $path = '';
+    $config = require('app/system/config.php');
+    $version = $config['application']['version'];
 
-	  $siteinfo['sys_ver'] = $version;
+    $siteinfo['sys_ver'] = $version;
 }
 
 
@@ -161,13 +190,13 @@ function sat_PAGEKIT(){
  * Gets version of Shopware since version 5
  */
 function sat_SHOPWARE(){
-	  global $siteinfo;
+    global $siteinfo;
 
-	  require __DIR__ . '/autoload.php';
-	  $environment = getenv('SHOPWARE_ENV') ?: getenv('REDIRECT_SHOPWARE_ENV') ?: 'production';
-	  $kernel = new \Shopware\Kernel($environment, $environment !== 'production');
-	
-	  $siteinfo['sys_ver'] = $kernel::VERSION;
+    require __DIR__ . '/autoload.php';
+    $environment = getenv('SHOPWARE_ENV') ?: getenv('REDIRECT_SHOPWARE_ENV') ?: 'production';
+    $kernel = new \Shopware\Kernel($environment, $environment !== 'production');
+
+    $siteinfo['sys_ver'] = $kernel::VERSION;
 }
 
 
