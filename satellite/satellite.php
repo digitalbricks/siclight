@@ -3,7 +3,6 @@
 //error_reporting(E_ALL);
 /**
  * SIC Satellite
- * Copyright andreherdling.de
  *
  * – EN –
  * PLEASE LEAVE THIS FILE IN PLACE
@@ -25,10 +24,6 @@
  * Falls Sie Fragen zu dieser Datei haben, zögern Sie nicht den
  * unten benannten Administrator Ihrer Site zu befragen.
  *
- *
- * Website Administrator
- * André Herdling
- * mail@andreherdling.de
 */
 
 
@@ -49,6 +44,7 @@ $siteinfo['sat_ver'] = "0.9";
 * 24.11.2017
 * added sat_SHOPWARE for Shopware since version 5
 * added sat_PAGEKIT for Pagekit since version 1
+* - Thanks to contributor "pictus"
 *
 * v0.8
 * 27.07.2017
@@ -125,7 +121,7 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
         case "SHOPWARE":
             sat_SHOPWARE();
             break;
-        case "SHOPWARE":
+        case "PAGEKIT":
             sat_PAGEKIT();
             break;
         default:
@@ -147,6 +143,7 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
 
 /**
  * sat_PAGEKIT
+ * Gets version of Shopware since version 1
  */
 function sat_PAGEKIT(){
    global $siteinfo;
@@ -161,6 +158,7 @@ function sat_PAGEKIT(){
 
 /**
  * sat_SHOPWARE
+ * Gets version of Shopware since version 5
  */
 function sat_SHOPWARE(){
 	  global $siteinfo;
@@ -179,8 +177,6 @@ function sat_SHOPWARE(){
  */
 function sat_LEPTON24(){
     global $siteinfo;
-    require_once('config.php');
-
     require_once('config.php');
 
     require_once(LEPTON_PATH.'/framework/class.frontend.php');
