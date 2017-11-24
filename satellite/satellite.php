@@ -36,10 +36,16 @@ $sat_secret = "YOUR_SECRET";
 /*--- SATELLITE (no need for changes)------------------------*/
 // satellite version: The current version of the satellite
 // Will be displayed in your SIC
-$siteinfo['sat_ver'] = "0.9";
+$siteinfo['sat_ver'] = "0.10";
 
 /**
 * CHANGELOG
+* v0.10
+* 24.11.2017
+* added sat_BLACKCAT() for BlackCat CMS
+* removed global $siteinfo from functions to prevent collisions
+* with equal named variables in CMS includes
+*
 * v0.9
 * 24.11.2017
 * added sat_SHOPWARE for Shopware since version 5
@@ -91,41 +97,41 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
     // Determine wich function has to be called
     switch ($_POST['sys']) {
         case "LEPTON24":
-            sat_LEPTON24();
+            $siteinfo['sys_ver'] = sat_LEPTON24();
             break;
         case "LEPTON":
-            sat_LEPTON();
+            $siteinfo['sys_ver'] = sat_LEPTON();
             break;
         case "MODX":
-            sat_MODX();
+            $siteinfo['sys_ver'] = sat_MODX();
             break;
         case "WORDPRESS":
-            sat_WORDPRESS();
+            $siteinfo['sys_ver'] = sat_WORDPRESS();
             break;
         case "WEBSITEBAKER":
-            sat_WB();
+            $siteinfo['sys_ver'] = sat_WB();
             break;
         case "WBCE":
             require_once('config.php'); // if included inside the sat_WBCE() it causes a Fatal Error
-            sat_WBCE();
+            $siteinfo['sys_ver'] = sat_WBCE();
             break;
         case "GETSIMPLE":
-            sat_GETSIMPLE();
+            $siteinfo['sys_ver'] = sat_GETSIMPLE();
             break;
         case "PROCESSWIRE":
-            sat_PROCESSWIRE();
+            $siteinfo['sys_ver'] = sat_PROCESSWIRE();
             break;
         case "STATIC":
             $siteinfo['sys_ver'] = "static";
             break;
         case "SHOPWARE":
-            sat_SHOPWARE();
+            $siteinfo['sys_ver'] = sat_SHOPWARE();
             break;
         case "PAGEKIT":
-            sat_PAGEKIT();
+            $siteinfo['sys_ver'] = sat_PAGEKIT();
             break;
         case "BLACKCAT":
-            sat_BLACKCAT();
+            $siteinfo['sys_ver'] = sat_BLACKCAT();
             break;    
         default:
             http_response_code(400);
@@ -148,25 +154,12 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
  * Gets version of BlackCat CMS, 1.x series
  */
 function sat_BLACKCAT(){
-    global $siteinfo;
-    // load config and framework
     require_once('config.php');
-    include CAT_PATH.'/framework/frontend.functions.php';
-
-    // query database
-    $result = CAT_Helper_Page::getInstance()->db()->query(
-        "SELECT `value` FROM `:prefix:settings` WHERE `name`=:string",
-        array('string'=>'cat_version')
-    );
-
-    if($result&&$result->numRows()>0){
-        // results to array
-        $fetch = $result->fetch(PDO::FETCH_ASSOC);
-        $siteinfo['sys_ver'] = $fetch['value'];
-    } else {
-        $siteinfo['sys_ver'] = "not found";
-    }
     
+    include CAT_PATH.'/framework/class.frontend.php';
+    $wb = new frontend();
+
+    return CAT_VERSION;
  }
 
 
@@ -175,13 +168,12 @@ function sat_BLACKCAT(){
  * Gets version of Pagekit since version 1
  */
 function sat_PAGEKIT(){
-    global $siteinfo;
     // config file requires a `$path`, setting an empty path variable
     $path = '';
     $config = require('app/system/config.php');
     $version = $config['application']['version'];
 
-    $siteinfo['sys_ver'] = $version;
+    return $version;
 }
 
 
@@ -190,13 +182,11 @@ function sat_PAGEKIT(){
  * Gets version of Shopware since version 5
  */
 function sat_SHOPWARE(){
-    global $siteinfo;
-
     require __DIR__ . '/autoload.php';
     $environment = getenv('SHOPWARE_ENV') ?: getenv('REDIRECT_SHOPWARE_ENV') ?: 'production';
     $kernel = new \Shopware\Kernel($environment, $environment !== 'production');
 
-    $siteinfo['sys_ver'] = $kernel::VERSION;
+    return $kernel::VERSION;
 }
 
 
@@ -205,14 +195,12 @@ function sat_SHOPWARE(){
  * Gets version of LEPTON CMS since version 2.4
  */
 function sat_LEPTON24(){
-    global $siteinfo;
     require_once('config.php');
-
     require_once(LEPTON_PATH.'/framework/class.frontend.php');
     // Create new frontend object
     $wb = new frontend();
 
-    $siteinfo['sys_ver'] =  LEPTON_VERSION;
+    return  LEPTON_VERSION;
 }
 
 
@@ -221,7 +209,6 @@ function sat_LEPTON24(){
  * Gets version of LEPTON CMS
  */
 function sat_LEPTON(){
-    global $siteinfo;
     require_once('config.php');
 
     // connect to db
@@ -235,9 +222,9 @@ function sat_LEPTON(){
 
     if($result = $mysqli->query($sql)){
         $row=$result->fetch_assoc();
-        $siteinfo['sys_ver'] = $row['value'];
+        return $row['value'];
     } else {
-        $siteinfo['sys_ver'] = "not found";
+        return "not found";
     };
 }
 
@@ -247,7 +234,6 @@ function sat_LEPTON(){
  * Gets version of WebsiteBaker CMS
  */
 function sat_WB(){
-  global $siteinfo;
   require_once('config.php');
 
   // connect to db
@@ -284,7 +270,7 @@ function sat_WB(){
 
   // combine version
   $version = $wb_version.$wb_sp.$wb_revision;
-  $siteinfo['sys_ver'] = $version;
+  return $version;
 }
 
 /**
@@ -292,9 +278,8 @@ function sat_WB(){
  * Gets version of WordPress
  */
 function sat_WORDPRESS(){
-  global $siteinfo;
   require_once('wp-includes/version.php');
-  $siteinfo['sys_ver'] = $wp_version;
+  return $wp_version;
 }
 
 /**
@@ -302,8 +287,6 @@ function sat_WORDPRESS(){
  * Gets version of WebsiteBaker Community Edition
  */
 function sat_WBCE(){
-    global $siteinfo;
-
     // connect to db
     $mysqli = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
     if ($mysqli->connect_errno) {
@@ -316,9 +299,9 @@ function sat_WBCE(){
 
     if($result = $mysqli->query($sql)){
         $row=$result->fetch_assoc();
-        $siteinfo['sys_ver'] = $row['value'];
+        return $row['value'];
     } else {
-        $siteinfo['sys_ver'] = "not found";
+        return "not found";
     };
 }
 
@@ -327,10 +310,9 @@ function sat_WBCE(){
  * Gets version of ProcessWire
  */
 function sat_PROCESSWIRE(){
-  global $siteinfo;
   // loading the API
   require_once('index.php');
-  $siteinfo['sys_ver'] = $wire->config->version();
+  return $wire->config->version();
 }
 
 /**
@@ -338,8 +320,6 @@ function sat_PROCESSWIRE(){
  * Gets version of MODX Revolution
  */
 function sat_MODX(){
-  global $siteinfo;
-
   // loading MODX
   require_once 'config.core.php';
   require_once MODX_CORE_PATH.'model/modx/modx.class.php';
@@ -349,7 +329,7 @@ function sat_MODX(){
 
   // getting version
   $vers = $modx->getVersionData();
-  $siteinfo['sys_ver'] = $vers['full_version'];
+  return $vers['full_version'];
 }
 
 /**
@@ -357,9 +337,8 @@ function sat_MODX(){
  * Gets version of GetSimple CMS
  */
 function sat_GETSIMPLE(){
-    global $siteinfo;
     define("IN_GS",true);
     require_once('admin/inc/basic.php');
     require_once('admin/inc/configuration.php');
-    $siteinfo['sys_ver'] = $site_version_no;
+    return $site_version_no;
 }
