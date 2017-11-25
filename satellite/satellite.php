@@ -36,10 +36,18 @@ $sat_secret = "YOUR_SECRET";
 /*--- SATELLITE (no need for changes)------------------------*/
 // satellite version: The current version of the satellite
 // Will be displayed in your SIC
-$siteinfo['sat_ver'] = "0.11";
+$siteinfo['sat_ver'] = "0.12";
 
 /**
 * CHANGELOG
+* v0.12
+* 25.11.2017
+* added sat_CONCRETE5() for Concrete5 CMS, tested with 8.1.0 and 8.2.1
+*
+* v0.11
+* 24.11.2017
+* added sat_JOOMLA() for Joomla! CMS, tested with 3.8.2
+*
 * v0.10
 * 24.11.2017
 * added sat_BLACKCAT() for BlackCat CMS
@@ -135,7 +143,10 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
             break;
         case "JOOMLA":
             $siteinfo['sys_ver'] = sat_JOOMLA();
-            break;          
+            break;
+        case "CONCRETE5":
+            $siteinfo['sys_ver'] = sat_CONCRETE5();
+            break;               
         default:
             http_response_code(400);
             echo "System not valid.";
@@ -151,6 +162,20 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
     http_response_code(400);
     echo "No valid data";
 };
+
+
+/**
+ * sat_CONCRETE5
+ * Gets version of Concrete5, tested with 8.1.0 and 8.2.1
+ */
+function sat_CONCRETE5(){
+    // NOTE: When using Concrete5 Version 5, you HAVE to
+    // comment out the include if concrete/bootstrap/configure.php
+    // else the satellite will return a rendered output of the page
+    $config = include('concrete/bootstrap/configure.php');
+    $config = include('concrete/config/concrete.php');
+    return $config['version_installed'];
+}
 
 
 /**
