@@ -82,7 +82,7 @@ So if you want to add your CMS, just write a new function, deliberate a `sys` st
 
 ## Upgrading Site Info Center LIGHT
 1. Download the newest version from GitHub
-2. Remove file `sites-config.NEW.php` and folder `/history` from the **just downloaded** `sic`-folder (you really don't want to overwrite that file and folder on your local server because the contain your configuration and the version history)
+2. Remove file `sites-config.NEW.php` and folder `/history` from the **just downloaded** `sic`-folder (you really don't want to overwrite that file and folder on your local server because they contain your configuration and the version history)
 3. Copy the remaining files and folder to the SIC folder on your local server, overwrite old files and folders
 
 This is all. But a previous backup is **always** a great idea.
