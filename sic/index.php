@@ -40,7 +40,7 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
 
-$siclight_version = "1.2";
+$siclight_version = "1.3";
 
 ?>
 <!DOCTYPE html>
@@ -68,16 +68,18 @@ $siclight_version = "1.2";
                 require_once 'sites-config.php';
                 require_once 'includes/functions.php';
 
+                $ActiveSites = ActiveSitesTable($sites);
+
                 echo "
                 <div class='uk-card uk-card-default'>
                     <div class='uk-card-header'>
                         <div uk-grid class='uk-child-width-expand'>
-                            <div><h2 class='uk-card-title'>Active Sites</h2></div>
+                            <div><h2 class='uk-card-title'>Active Sites <span class='uk-badge'>".$ActiveSites['count']."</span></h2></div>
                             <div class='refresh-all'><button class='refresh-all uk-button uk-button-danger' type='button' uk-tooltip title='Refresh all active sites'><span uk-icon='icon: refresh'></span></button></div>
                         </div>
                     </div>
                     <div class='uk-card-body'>
-                        ".ActiveSitesTable($sites)."
+                        ".$ActiveSites['table']."
                     </div>
                 </div>\n";
                 

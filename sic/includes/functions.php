@@ -16,6 +16,9 @@ function ActiveSitesTable($sites){
     // init counter used for item indexing
     $i = 0;
 
+    // init counter for active sites
+    $a = 0;
+
     $table ='';
     if(count($sites)){
         $table.= "<div class='uk-overflow-auto'>\n";
@@ -36,6 +39,7 @@ function ActiveSitesTable($sites){
             $i ++;
             $options = $sites[$name];
             if($options["inact"]==false){
+                $a ++;
                 $table.= "    <tr class='active_site' data-id='$i' data-name='$name'>\n";
                 $table.= "        <td>".$name."</td>\n";
                 $table.= "        <td>".$options["sys"]."</td>\n";
@@ -51,12 +55,18 @@ function ActiveSitesTable($sites){
         $table.= "</table>\n";
         $table.= "</div>\n"; // clsoing .uk-overflow-auto
 
-        return $table;
+        $outout['table'] = $table;
+        $outout['count'] = $a;
+
+        return $outout;
     } else {
-        return "
+        $outout['table'] = "
             <div uk-alert class='uk-alert-danger'>
                 <strong>No sites configured!</strong> The sites-Array, configured in in sites-config.php seems to have no entries.
             </div>\n";
+        $outout['count'] = 0;
+        
+        return $outout;
     }
 
 }
@@ -76,6 +86,9 @@ function InactiveSites($sites){
 
     // init counter used for item indexing
     $i = 0;
+
+    // init counter for inactive sites
+    $a = 0;
 
     $table ='';
     if(count($sites)){
@@ -100,6 +113,7 @@ function InactiveSites($sites){
             $i ++;
             $options = $sites[$name];
             if($options["inact"]==true){
+                $a++;
                 $rows.= "    <tr class='active_site' data-id='$i' data-name='$name'>\n";
                 $rows.= "        <td>".$name."</td>\n";
                 $rows.= "        <td>".$options["sys"]."</td>\n";
@@ -116,7 +130,7 @@ function InactiveSites($sites){
         if($rows!=''){
             $output = "<div class='uk-card uk-card-default inactivesites'>\n";
             $output.= "     <div class='uk-card-header'>\n";
-            $output.= "         <h2 class='uk-card-title'>Inactive Sites <small>(still not or no longer maintained)</small></h2>\n";
+            $output.= "         <h2 class='uk-card-title'>Inactive Sites <span class='uk-badge'>".$a."</span> <small>(still not or no longer maintained)</small></h2>\n";
             $output.= "     </div>\n"; // closing .uk-card-header
             $output.= "     <div class='uk-card-body'>\n";
             $output.= "         <div class='uk-overflow-auto'>\n";
