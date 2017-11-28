@@ -36,17 +36,22 @@ $sat_secret = "YOUR_SECRET";
 /*--- SATELLITE (no need for changes)------------------------*/
 // satellite version: The current version of the satellite
 // Will be displayed in your SIC
-$siteinfo['sat_ver'] = "0.12";
+$siteinfo['sat_ver'] = "0.13";
 
 /**
 * CHANGELOG
+* v0.13
+* 28.11.2017
+* added sat_JOOMLA15() for legacy Joomla! CMS version 1.5
+* - Thanks to contributor Olaf Buchheim
+*
 * v0.12
 * 25.11.2017
 * added sat_CONCRETE5() for Concrete5 CMS, tested with 8.1.0 and 8.2.1
 *
 * v0.11
 * 24.11.2017
-* added sat_JOOMLA() for Joomla! CMS, tested with 3.8.2
+* added sat_JOOMLA() for Joomla! CMS, tested with 3.6 and 3.8.2
 *
 * v0.10
 * 24.11.2017
@@ -144,6 +149,9 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
         case "JOOMLA":
             $siteinfo['sys_ver'] = sat_JOOMLA();
             break;
+        case "JOOMLA15":
+            $siteinfo['sys_ver'] = sat_JOOMLA15();
+            break;
         case "CONCRETE5":
             $siteinfo['sys_ver'] = sat_CONCRETE5();
             break;               
@@ -180,7 +188,7 @@ function sat_CONCRETE5(){
 
 /**
  * sat_JOOMLA
- * Gets version of Joomla! CMS, tested with 3.8.2
+ * Gets version of Joomla! CMS, tested with 3.6 and 3.8.2
  */
 function sat_JOOMLA(){
     // needs to be defined
@@ -194,6 +202,26 @@ function sat_JOOMLA(){
     // create JVersion object
     $version = new JVersion();
 
+    return $version->getShortVersion();
+ }
+
+
+ /**
+ * sat_JOOMLA15
+ * Gets version of legacy Joomla! CMS v1.5
+ */
+ function sat_JOOMLA15(){
+    // needs to be defined
+    define('_JEXEC', 1);
+    if (!defined('_JDEFINES')){
+        define('JPATH_BASE', _DIR_);
+        require_once JPATH_BASE . '/includes/defines.php';
+    }
+    require_once JPATH_BASE . '/libraries/joomla/version.php';
+    
+    // create JVersion object
+    $version = new JVersion();
+    
     return $version->getShortVersion();
  }
 
