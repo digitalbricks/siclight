@@ -95,6 +95,7 @@ function RefreshSuccess(response){
 
     // add current date and time in the "Updated" cell
     var currentdate = new Date();
+    /*
     var germandate = currentdate.getDate()
         +"."
         +(currentdate.getMonth()+1)
@@ -105,7 +106,10 @@ function RefreshSuccess(response){
         +currentdate.getMinutes()
         +":"
         +currentdate.getSeconds();
-    $("tr[data-id="+response['site_id']+"] td.time").text(germandate);
+    */
+    var germandate = ('0' + currentdate.getDate()).slice(-2) + '.' + ('0' + (currentdate.getMonth()+1)).slice(-2) + '.' + currentdate.getFullYear();        
+    var germantime = ('0' + (currentdate.getHours())).slice(-2) + ':' + ('0' + (currentdate.getMinutes())).slice(-2) + ':' + ('0' + (currentdate.getSeconds())).slice(-2)
+    $("tr[data-id="+response['site_id']+"] td.time").text(germandate + ' @ ' + germantime);
 
     // add the values from response to the table cells
     $("tr[data-id="+response['site_id']+"] td.sys_ver").text(response['sys_ver']);
