@@ -11,7 +11,7 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
 
-$siclight_version = "1.3";
+$siclight_version = "1.4";
 
 ?>
 <!DOCTYPE html>
