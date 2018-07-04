@@ -68,6 +68,11 @@ $(document).ready(function(){
 
     // Refresh all
     $('button.refresh-all').click(function(){
+
+        // set variable to indicate the refesh all button was clicked
+        // we use the window object in order to make it globally accessible
+        window.refreshed_all = true;
+
         $('button.refresh').each(function(){
             $(this).trigger("click");
         });
@@ -162,5 +167,17 @@ function RefreshComplete(response){
             $progressbar.delay(1000).attr( "value", 0 );
             $progressbar.delay(1000).attr( "max", 100 );
         }, 1000);
+
+        // submit results to summary writer
+        submitResultsToSummaryWriter();
     }
+}
+
+
+function submitResultsToSummaryWriter(){
+    if(typeof window.refreshed_all !== 'undefined' && window.refreshed_all == true){
+        console.log('Refreshed all');
+    }
+    // reset variable to false
+    window.refreshed_all = false;
 }
