@@ -58,7 +58,3 @@ foreach ($data as $item){
 
 // close file handle
 fclose($fh);
-
-
-
-var_dump($data);

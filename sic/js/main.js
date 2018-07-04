@@ -192,6 +192,7 @@ function RefreshComplete(response){
 
 
 function submitResultsToSummaryWriter(){
+    // check if refresh all button was activated
     if(typeof window.refreshed_all !== 'undefined' && window.refreshed_all == true){
         //console.log(results);
 
@@ -201,16 +202,13 @@ function submitResultsToSummaryWriter(){
             data: JSON.stringify(results),
             url: "connector/summarywriter.php",
             success: function(msg){
-              console.log('send');
+                UIkit.notification({
+                    message: '<div style="text-align:center"><h2>Summary created</h2><a class="uk-button uk-button-danger" href="history/_summary-latest.csv" target="_blank">Dowload</a></div>',
+                    status: 'primary',
+                    pos: 'bottom-right',
+                    timeout: 15000
+                });
             }
-        });
-
-
-        UIkit.notification({
-            message: 'Writer ....',
-            status: 'success',
-            pos: 'bottom-right',
-            timeout: 5000
         });
     }
 
