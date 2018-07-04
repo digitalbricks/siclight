@@ -123,6 +123,9 @@ function RefreshSuccess(response){
     $progressbar.attr( "value", $queue_items_processed );
 
     // push response into results array
+    // -- but first add date and time
+    response['date'] = germandate;
+    response['time'] = germantime;
     results.push(response);
 };
 
