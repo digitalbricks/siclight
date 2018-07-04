@@ -25,6 +25,8 @@ In order to prevent the **satellite** to answer all requests and blasting inform
 
 If you hit the refresh button on the **SIC** user interface, SIC will call the **satellite**, telling him wich CMS it should search for version information (wich function the satellite should run for getting the CMS version) and providing the shared secret. After the satellite has answered, the received information are displayed in the SIC and also stored in a CSV file in `/history` folder. **Yes, CSV**. There is no need for a database and you could import the CSV files into a spreadsheet tool if you want. SIC also provides a button for **bulk updating** all configured sites and displaying the **version history** of each site with one single click.
 
+Since version **1.4** of **SIC** there will be also a `_summary-latest.csv` created in `/history` folder when you click the red refresh-all-button on the top right. This file will contain all results of the latest sites information bulk update. You will see an according notification when the refresh queue is finished with a download button.
+
 ## Configuration: SIC
 After downloading the project, you will find a file `sites-config.NEW.php` in the `/sic` folder. Just rename it to `sites-config.php` and configure all your sites using the syntax sample provided in the file:
 
