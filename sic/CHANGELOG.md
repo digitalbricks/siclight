@@ -1,5 +1,11 @@
 # Changelog Site Info Center LIGHT
 
+## v1.4
+**04.07.2018**
+* added a function for creating a summary CSV file if the bulk refresh (refresh-all button) was started
+* fixed output of date and time to correctly adding a leading zero if needed (23:7:5 becomes 23:07:05)
+---
+
 ## v1.3
 **28.11.2017**
 * added a badge that shows number of active / inactive sites
