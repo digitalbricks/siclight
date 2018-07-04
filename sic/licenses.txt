@@ -27,7 +27,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 * software published under open source licenses.                    *
 *                                                                   *
 * MY THANKS GOES TO ALL THE GREAT PEOPLE WHOSE WORK, PUBLISHED      *
-* UNDER FREE LICENSES, ENABLE OTHERS LIKE METO BUILD THINGS AND     *
+* UNDER FREE LICENSES, ENABLE OTHERS LIKE ME TO BUILD THINGS AND     *
 * TO REALIZE THEIR IDEAS. THANKS A LOT!                             *
 * - Andre Herdling (www.andreherdling.de)                           *
 *                                                                   *
