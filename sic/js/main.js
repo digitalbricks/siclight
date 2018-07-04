@@ -5,6 +5,9 @@ var $queue_items_processed = 0;
 // get progressbar
 var $progressbar = $('#progressbar');
 
+// initiate results array that will store all responses
+var results = [];
+
 
 
 $(document).ready(function(){
@@ -114,6 +117,9 @@ function RefreshSuccess(response){
     
     // update progressbar current value
     $progressbar.attr( "value", $queue_items_processed );
+
+    // push response into results array
+    results.push(response);
 };
 
 function RefreshError(response){
@@ -139,6 +145,17 @@ function RefreshError(response){
     
     // update progressbar current value
     $progressbar.attr( "value", $queue_items_processed );
+
+    // push error messages into results array
+    // because we use the results array to create a CSV summary later
+    results.push({
+        'php_ver' : 'n/a',
+        'sat_ver' : 'n/a',
+        'site_id' : response['site_id'],
+        'site_name' : response['site_name'],
+        'sys_ver': 'n/a'
+    });
+    
 }
 
 function RefreshComplete(response){
@@ -176,8 +193,30 @@ function RefreshComplete(response){
 
 function submitResultsToSummaryWriter(){
     if(typeof window.refreshed_all !== 'undefined' && window.refreshed_all == true){
-        console.log('Refreshed all');
+        //console.log(results);
+
+        // send results to summarywriter
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(results),
+            url: "connector/summarywriter.php",
+            success: function(msg){
+              console.log('send');
+            }
+        });
+
+
+        UIkit.notification({
+            message: 'Writer ....',
+            status: 'success',
+            pos: 'bottom-right',
+            timeout: 5000
+        });
     }
+
     // reset variable to false
     window.refreshed_all = false;
+
+    // reset results
+    results =[];
 }
