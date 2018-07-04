@@ -20,7 +20,7 @@ if (file_exists($targetFile)) {
 $fh = fopen($targetFile, 'w');
 
 // create table header in CSV
-fputcsv($fh,array('System','Sys Ver','PHP Ver','Sat Ver', 'Date', 'Time'));
+fputcsv($fh,array('Site','System','Sys Ver','PHP Ver','Sat Ver', 'Date', 'Time'));
 
 // - fallbacks
 $sys_ver = "n/a";
@@ -74,7 +74,7 @@ foreach ($data as $item){
     };
 
     // write data to CSV;
-    fputcsv($fh,array($sys ,$sys_ver, $php_ver, $sat_ver, $date, $time));
+    fputcsv($fh,array($site_name, $sys ,$sys_ver, $php_ver, $sat_ver, $date, $time));
 
 }
 
