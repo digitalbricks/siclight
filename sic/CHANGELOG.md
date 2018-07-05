@@ -1,5 +1,10 @@
 # Changelog Site Info Center LIGHT
 
+## v1.4.1
+**05.07.2018**
+* added a button to the top nav (next to refresh-all) for download latest summary CSV
+---
+
 ## v1.4
 **04.07.2018**
 * added a function for creating a summary CSV file if the bulk refresh (refresh-all button) was started

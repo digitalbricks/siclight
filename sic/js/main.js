@@ -197,12 +197,16 @@ function submitResultsToSummaryWriter(){
             data: JSON.stringify(results),
             url: "connector/summarywriter.php",
             success: function(msg){
+                // notiy that summary is available
                 UIkit.notification({
                     message: '<div style="text-align:center"><h2>Summary created</h2><a class="uk-button uk-button-danger" href="history/_summary-latest.csv" target="_blank">Dowload</a></div>',
                     status: 'primary',
                     pos: 'bottom-right',
                     timeout: 15000
                 });
+
+                // show the download-summary-button in header
+                $('.download-summary').removeClass('hide');
             }
         });
     }
