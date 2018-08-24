@@ -1,5 +1,9 @@
 # Changelog Satellite
 
+## v0.14
+**24.08.2018**
+* changed `$wire->config->version()` to `$wire->config->version` in sat_PROCESSWIRE() because `$wire->config->version()` (with brackets) just returns _true_ starting in PW 3.110 (according to the API docs, the call without brackets is and was always the right one but former versions of PW returned the version number anyway)
+
 ## v0.13
 **28.11.2017**
 * added sat_JOOMLA15() for legacy Joomla! CMS version 1.5 (Thanks to contributor Olaf Buchheim)
