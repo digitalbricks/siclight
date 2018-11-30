@@ -37,7 +37,7 @@ function ActiveSitesTable($sites){
         $table.= "        <td>&nbsp;</td>\n";
         $table.= "    </tr>\n";
         $table.= " </thead>\n";
-        $table.= " <tbody>\n";
+        $table.= " <tbody class='js-filter'>\n";
         foreach ($sites as $name => $value){
             $i ++;
             $options = $sites[$name];
@@ -68,10 +68,27 @@ function ActiveSitesTable($sites){
         }
         $table.= " </tbody>\n";
         $table.= "</table>\n";
-        $table.= "</div>\n"; // clsoing .uk-overflow-auto
+        $table.= "</div>\n"; // closing .uk-overflow-auto
 
 
-        $outout['table'] = $table;
+        // creating filter buttons
+        $systems = GetAllSystems();
+        $filter ="<ul class=\"uk-subnav uk-subnav-pill\" uk-margin>\n
+                    <li>\n
+                        <a href=\"#\">Filter <span uk-icon=\"icon:  triangle-down\"></span></a>\n
+                        <div uk-dropdown=\"mode: click;\">\n
+                            <ul class=\"uk-nav uk-dropdown-nav\">\n
+                                <li class=\"uk-active\" uk-filter-control><a href=\"#\">All Systems</a></li>\n";
+                                foreach ($systems as $system){
+                                    $filter.= "  <li uk-filter-control=\"[data-sys='{$system}']\"><a href=\"#\">{$system}</a></li>\n";
+                                }                  
+        $filter.= "         </ul>\n
+                        </div>\n
+                    </li>\n
+                </ul>\n";
+
+
+        $outout['table'] = $filter.$table;
         $outout['count'] = $a;
 
         return $outout;
@@ -331,7 +348,7 @@ function CsvSummaryToArray($targetFile = 'history/_summary-latest.csv'){
 /**
  * GetAllSystems
  *
- * Creates an array with all systems configured in sites-config.php
+ * Creates an array with all ACTIVE systems configured in sites-config.php
  * with no duplicates
  *
  * @return array array of all systems
@@ -340,8 +357,8 @@ function GetAllSystems(){
     global $sites;
     $systems = array();
     foreach($sites as $site){
-
-        if(!in_array($site['sys'],$systems)){
+        // only add systems that are not inactive and don't create duplicates
+        if(!in_array($site['sys'],$systems) AND !$site['inact']){
             array_push($systems,$site['sys']);
         }
         

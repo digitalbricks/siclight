@@ -60,6 +60,11 @@ table td.actions{
     text-align: right;
     white-space: nowrap;
 }
+/*preventing flickering when filtering by system*/
+tbody.uk-animation-target{
+    display: none;
+    position: static;
+}
 a.disabled{
     pointer-events: none;
     opacity: 0.2;

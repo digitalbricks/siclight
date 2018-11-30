@@ -62,7 +62,9 @@ $siclight_version = "1.5";
                         </div>
                     </div>
                     <div class='uk-card-body'>
+                        <div uk-filter=\"target: .js-filter\">\n
                         ".$ActiveSites['table']."
+                        </div>
                     </div>
                 </div>\n";
                 
