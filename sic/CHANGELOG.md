@@ -1,5 +1,10 @@
 # Changelog Site Info Center LIGHT
 
+## v1.6
+**30.11.2018**
+* added option to filter the active sites table by system
+---
+
 ## v1.5
 **30.11.2018**
 * SIC now loads the data from the summary file (`/history/_summary-latest.csv`), which is created on each "refresh all" run. So the table of all active sites shows the latest results when the UI is loaded the first time.

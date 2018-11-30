@@ -73,14 +73,14 @@ function ActiveSitesTable($sites){
 
         // creating filter buttons
         $systems = GetAllSystems();
-        $filter ="<ul class=\"uk-subnav uk-subnav-pill\" uk-margin>\n
+        $filter ="<ul class=\"sites-filter uk-subnav uk-subnav-pill\" uk-margin>\n
                     <li>\n
                         <a href=\"#\">Filter <span uk-icon=\"icon:  triangle-down\"></span></a>\n
                         <div uk-dropdown=\"mode: click;\">\n
                             <ul class=\"uk-nav uk-dropdown-nav\">\n
                                 <li class=\"uk-active\" uk-filter-control><a href=\"#\">All Systems</a></li>\n";
                                 foreach ($systems as $system){
-                                    $filter.= "  <li uk-filter-control=\"[data-sys='{$system}']\"><a href=\"#\">{$system}</a></li>\n";
+                                    $filter.= "  <li uk-filter-control=\"[data-sys='{$system}']\" data-filter-for=\"{$system}\"><a href=\"#\">{$system}</a></li>\n";
                                 }                  
         $filter.= "         </ul>\n
                         </div>\n
@@ -362,7 +362,9 @@ function GetAllSystems(){
             array_push($systems,$site['sys']);
         }
         
-    } return $systems;
+    }
+    sort($systems); 
+    return $systems;
 }
 
 /*

@@ -82,6 +82,23 @@ $(document).ready(function(){
     });
 
 
+
+
+    // add number of matching sites to sites filter selector list
+    $('ul.sites-filter li[data-filter-for]').each(function(){
+        // what is this button for?
+        var $filterFor = $(this).data('filter-for');
+        
+        // how many matching sites we hav
+        var $filterMatches = $('tr[data-sys="'+$filterFor+'"]').length;
+        //console.log($filterFor+'   '+$filterMatches);
+
+        // add number to filter item
+        $(this).find('a').append(' ('+$filterMatches+')');
+    });
+
+
+
 });
 
 
