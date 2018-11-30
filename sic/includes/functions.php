@@ -43,7 +43,7 @@ function ActiveSitesTable($sites){
             $options = $sites[$name];
             if($options["inact"]==false){
                 $a ++;
-                $table.= "    <tr class='active_site' data-id='$i' data-name='$name'>\n";
+                $table.= "    <tr class='active_site' data-id='$i' data-name='$name' data-sys='".$options["sys"]."'>\n";
                 $table.= "        <td>".$name."</td>\n";
                 $table.= "        <td>".$options["sys"]."</td>\n";
 
@@ -325,6 +325,27 @@ function CsvSummaryToArray($targetFile = 'history/_summary-latest.csv'){
         return $array;
     }
     
+}
+
+
+/**
+ * GetAllSystems
+ *
+ * Creates an array with all systems configured in sites-config.php
+ * with no duplicates
+ *
+ * @return array array of all systems
+ */
+function GetAllSystems(){
+    global $sites;
+    $systems = array();
+    foreach($sites as $site){
+
+        if(!in_array($site['sys'],$systems)){
+            array_push($systems,$site['sys']);
+        }
+        
+    } return $systems;
 }
 
 /*
