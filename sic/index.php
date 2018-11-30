@@ -11,7 +11,7 @@ ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
 
-$siclight_version = "1.4.1";
+$siclight_version = "1.5";
 
 ?>
 <!DOCTYPE html>
@@ -71,7 +71,7 @@ $siclight_version = "1.4.1";
         ?>
 
     </div>
-
+ 
     <div class="licenses">
         SIC LIGHT <?php echo $siclight_version; ?> by <a href="https://www.andreherdling.de">André Herdling</a> | <a href="licenses.txt">Licenses &amp; used software</a>
     </div>

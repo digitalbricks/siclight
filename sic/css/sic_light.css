@@ -37,6 +37,12 @@ tr.refreshing button.refresh span{
     -o-animation: rotating 1s linear infinite;
     animation: rotating 1s linear infinite;
 }
+span.recent,
+td.recent{
+    color: #999;
+    font-style: italic;
+
+}
 tr.refresh-error{
     background-color: #f3cece;
     color: #000;

@@ -93,6 +93,9 @@ function RefreshSuccess(response){
     // remove "refreshing" class from table row
     $("tr[data-id="+response['site_id']+"]").removeClass('refreshing');
 
+    // remove "recent" class from table row
+    $("tr[data-id="+response['site_id']+"]>td").removeClass('recent');
+
     // add current date and time in the "Updated" cell
     var currentdate = new Date();
     var germandate = ('0' + currentdate.getDate()).slice(-2) + '.' + ('0' + (currentdate.getMonth()+1)).slice(-2) + '.' + currentdate.getFullYear();        
@@ -123,6 +126,9 @@ function RefreshError(response){
     $("tr[data-id="+response['site_id']+"]").removeClass('refreshing');
     $("tr[data-id="+response['site_id']+"]").addClass('refresh-error');
     $("tr[data-id="+response['site_id']+"] td.time").html('failed <span uk-icon="icon: warning" uk-tooltip title="'+response['errortxt']+'"></span>');
+
+    // remove "recent" class from the time cell
+    $("tr[data-id="+response['site_id']+"]>td.time").removeClass('recent');
 
     // promt error via notification
     UIkit.notification({

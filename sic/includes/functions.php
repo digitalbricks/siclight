@@ -10,6 +10,9 @@
  */
 function ActiveSitesTable($sites){
 
+    // get the previous data from "refresh all" run stored in summary CSV
+    $previous = CsvSummaryToArray();
+
     // sorting by primary key (site name)
     ksort($sites);
 
@@ -43,10 +46,22 @@ function ActiveSitesTable($sites){
                 $table.= "    <tr class='active_site' data-id='$i' data-name='$name'>\n";
                 $table.= "        <td>".$name."</td>\n";
                 $table.= "        <td>".$options["sys"]."</td>\n";
-                $table.= "        <td class='sys_ver'>n/a</td>\n";
-                $table.= "        <td class='php_ver'>n/a</td>\n";
-                $table.= "        <td class='sat_ver'>n/a</td>\n";
-                $table.= "        <td class='time'>&mdash;</td>\n";
+
+                // preset cells with the data from previous "refresh all" run, if available
+                if(is_array($previous) AND array_key_exists($name,$previous)){
+                    $recent = $previous[$name]; 
+                    $table.= "        <!-- data from summary CSV -->";
+                    $table.= "        <td class='recent sys_ver'>{$recent['sys_ver']}</td>\n";
+                    $table.= "        <td class='recent php_ver'>{$recent['php_ver']}</td>\n";
+                    $table.= "        <td class='recent sat_ver'>{$recent['sat_ver']}</td>\n";
+                    $table.= "        <td class='recent time'>{$recent['date']}&nbsp;<span uk-icon='icon: info' uk-tooltip title='The data shown is from the last Refresh-All action and may be outdated'></span></td>\n";
+                } else {
+                    $table.= "        <td class='sys_ver'>n/a</td>\n";
+                    $table.= "        <td class='php_ver'>n/a</td>\n";
+                    $table.= "        <td class='sat_ver'>n/a</td>\n";
+                    $table.= "        <td class='time'>&mdash;</td>\n";
+                }
+
                 $table.= "        <td class='actions'><button class='refresh uk-button uk-button-primary' type='button' uk-tooltip title='Refresh'><span uk-icon='icon: refresh'></span></button>".CreateHistoryLink($name)."</td>\n";
                 $table.= "    </tr>\n";
             }
@@ -54,6 +69,7 @@ function ActiveSitesTable($sites){
         $table.= " </tbody>\n";
         $table.= "</table>\n";
         $table.= "</div>\n"; // clsoing .uk-overflow-auto
+
 
         $outout['table'] = $table;
         $outout['count'] = $a;
@@ -273,6 +289,42 @@ function CreateHistoryLink($name){
        $output.= "</span>\n";
        return $output;
     }
+}
+
+
+/**
+ * CsvSummaryToArray
+ *
+ * Creates an array from the summary CSV
+ * with the site name as array index
+ *
+ * @param string $targetFile path to the summary CSV
+ *
+ * @return array array of the summary contents with site name as key
+ */
+function CsvSummaryToArray($targetFile = 'history/_summary-latest.csv'){
+    if(file_exists($targetFile)){
+        $f = fopen($targetFile, "r");
+        $line_number = 1;
+        while (($line = fgetcsv($f)) !== false) {
+            // ignore first line, because it contains just the table header
+            if($line_number!=1){
+                // create array
+                $array[$line[0]]=array(
+                    'sys_ver' => $line[2],
+                    'php_ver' => $line[3],
+                    'sat_ver' => $line[4],
+                    'date' => $line[5],
+                    'time' => $line[6],
+                );
+            }
+            $line_number++;
+            
+        }
+        fclose($f);
+        return $array;
+    }
+    
 }
 
 /*
