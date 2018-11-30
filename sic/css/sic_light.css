@@ -47,6 +47,12 @@ tr.refresh-error{
     background-color: #f3cece;
     color: #000;
 }
+/* preventing too long php version strings*/
+td.php_ver{
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 table tr:hover{
     background-color: #eee;
 }
