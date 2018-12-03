@@ -50,21 +50,27 @@ $siclight_version = "1.6";
                     $dl_sum_class = 'hide';
                 }
 
+                // refresh all button markup
+                if($ActiveSites['count']>0){
+                    $refresh_all_btn = "<button class='refresh-all uk-button uk-button-danger' type='button' uk-tooltip title='Refresh all active sites'><span uk-icon='icon: refresh'></span></button>\n";
+                } else {
+                    $refresh_all_btn = "";
+                }
+
+
                 echo "
                 <div class='uk-card uk-card-default'>
                     <div class='uk-card-header'>
                         <div uk-grid class='uk-child-width-expand'>
                             <div><h2 class='uk-card-title'>Active Sites <span class='uk-badge'>".$ActiveSites['count']."</span></h2></div>
                             <div class='header-left'>
-                                <button class='refresh-all uk-button uk-button-danger' type='button' uk-tooltip title='Refresh all active sites'><span uk-icon='icon: refresh'></span></button>  
-                                    <a href='history/_summary-latest.csv' target='blank' class='uk-button uk-button-default download-summary {$dl_sum_class}' uk-tooltip title='Download latest summary CSV'><span uk-icon='icon: download'></span></a>
+                                {$refresh_all_btn}
+                                <a href='history/_summary-latest.csv' target='blank' class='uk-button uk-button-default download-summary {$dl_sum_class}' uk-tooltip title='Download latest summary CSV'><span uk-icon='icon: download'></span></a>
                             </div>
                         </div>
                     </div>
                     <div class='uk-card-body'>
-                        <div uk-filter=\"target: .js-filter\">\n
                         ".$ActiveSites['table']."
-                        </div>
                     </div>
                 </div>\n";
                 

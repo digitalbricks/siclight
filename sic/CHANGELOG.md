@@ -1,5 +1,10 @@
 # Changelog Site Info Center LIGHT
 
+## v1.6.1
+**03.12.2018**
+* some changes in filter markup to prevent js errors if no site is configured yet
+---
+
 ## v1.6
 **30.11.2018**
 * added option to filter the active sites table by system

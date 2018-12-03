@@ -88,7 +88,7 @@ function ActiveSitesTable($sites){
                 </ul>\n";
 
 
-        $outout['table'] = $filter.$table;
+        $outout['table'] = "<div uk-filter=\"target: .js-filter\">\n".$filter.$table."</div>\n";
         $outout['count'] = $a;
 
         return $outout;
