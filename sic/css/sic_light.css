@@ -60,11 +60,17 @@ table td.actions{
     text-align: right;
     white-space: nowrap;
 }
+/*filter button*/
+ul.sites-filter>li.uk-first-column>a{
+    border : 1px solid #e5e5e5;
+}
+
 /*preventing flickering when filtering by system*/
 tbody.uk-animation-target{
     display: none;
     position: static;
 }
+
 a.disabled{
     pointer-events: none;
     opacity: 0.2;
@@ -120,6 +126,22 @@ a.disabled{
     }
   }
 
+  /*some improvements to get more sites into viewport*/
+  html{
+    font-size: 14px;
+  }
+  .uk-table td,
+  .uk-table th{
+      padding: 0.5em;
+  }
+  .uk-button{
+      padding: 0 1em;
+      line-height: 2em;
+  }
+  span.uk-icon>svg{
+      width: 1em;
+      height: auto;
+  }
 
   /*print styles*/
   @media print{
