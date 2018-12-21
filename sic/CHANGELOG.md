@@ -1,5 +1,10 @@
 # Changelog Site Info Center LIGHT
 
+## v1.6.2
+**21.12.2018**
+* some improvements for more visible sites in viewport (font size, icons, padding)
+---
+
 ## v1.6.1
 **03.12.2018**
 * some changes in filter markup to prevent js errors if no site is configured yet
