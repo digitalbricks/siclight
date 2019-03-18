@@ -256,6 +256,10 @@ function RefreshComplete(response){
 
         // submit results to summary writer
         submitResultsToSummaryWriter();
+
+        // update DataTable (causing e.g. re-sort with new data)
+        SitesDataTable.rows().invalidate();
+        SitesDataTable.draw();
     }
 }
 
