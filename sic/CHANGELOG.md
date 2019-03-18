@@ -1,5 +1,11 @@
 # Changelog Site Info Center LIGHT
 
+## v1.7
+**18.03.2019**
+* added DataTables.js for searching and sorting the table of active sites
+* added ability to only update all filtered / searched sites
+---
+
 ## v1.6.2
 **21.12.2018**
 * some improvements for more visible sites in viewport (font size, icons, padding)

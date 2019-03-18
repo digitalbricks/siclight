@@ -11,6 +11,34 @@ var results = [];
 
 
 $(document).ready(function(){
+
+    // DataTables, introduced in SIClight v1.7
+    var datatable = $('table.sites').DataTable({
+        "paging": false, // no pagination
+        "bInfo" : false, // no footer info bar
+        "order" : [ 0, 'asc' ], // by first column
+        language: {
+            searchPlaceholder: "Search sites",
+            search: "", // no "search" label
+        }
+    });
+
+    // search DataTable from within external search field
+    // (not generated via datatables JS)
+    $('#search_sites').keyup(function(){
+        datatable.search($(this).val()).draw();
+    })
+
+
+    // reset filter and search
+    // NOTE: Resetting the UIkit filter is done via the 'uk-filter-control' element without
+    // any selector (https://getuikit.com/docs/filter#reset-filter) – so we only have to take
+    // care about the DataTables Search component
+    $('#resetFilterAndSearch').click(function(){
+        $('#search_sites').val(''); // empty external search box
+        datatable.search('').draw(); // empty the (hidden) DataTable-native search box
+    });
+
     
     // Refresh single item
     $('button.refresh').click(function(){
@@ -72,11 +100,34 @@ $(document).ready(function(){
     // Refresh all
     $('button.refresh-all').click(function(){
 
+        // reset DataTable filter
+        // Source: https://datatables.net/plug-ins/api/fnFilterClear
+        datatable.search( '' ).columns().search( '' ).draw();
+
+        // reset DataTable sort 
+        datatable.order( [ 0, 'asc' ] ).draw();
+
+        // trigger click on RESET FILTER & SEARCH button
+        // yes ... some of this is redundant, because the
+        // DataTable search filter is already cleared a few
+        // lines above – but i kept this in place for now
+        $('#resetFilterAndSearch').trigger("click");
+
         // set variable to indicate the refesh all button was clicked
         // we use the window object in order to make it globally accessible
         window.refreshed_all = true;
 
         $('button.refresh').each(function(){
+            $(this).trigger("click");
+        });
+    });
+
+    // Refresh filtered sites (via DataTables)
+    $('button.refresh-selected').click(function(){
+        // only trigger visible (non-filtered) elements
+        // NOTE: the "tr:visible" prefix is not necessary for DataTables
+        // but for the CMS filter
+        $('tr:visible button.refresh').each(function(){
             $(this).trigger("click");
         });
     });

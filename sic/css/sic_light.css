@@ -1,178 +1,273 @@
-html{
+html {
     background-color: #eee;
 }
-body{
+
+body {
     padding: 40px 0 0 0;
 }
-body.history{
+
+body.history {
     background-color: #fff;
     padding-bottom: 30px;
 }
-h1,h2,h3{
+
+h1,
+h2,
+h3 {
     font-weight: 100;
 }
-.header-left{
+
+.header-left {
     text-align: right;
-    padding-right: 12px;
 }
-.download-summary.hide{
+
+.download-summary.hide {
     display: none;
 }
-.uk-card.inactivesites{
+
+.uk-card.inactivesites {
     margin-top: 40px;
 }
-.uk-table td{
+
+.uk-table td {
     vertical-align: middle;
     font-size: 0.9em;
 }
 
-tr.refreshing{
+.uk-table.sites{
+    margin-top: 0;
+}
+
+tr.refreshing {
     background-color: #fffceb;
     color: #000;
 }
-tr.refreshing button.refresh span{
+
+tr.refreshing button.refresh span {
     -webkit-animation: rotating 1s linear infinite;
     -moz-animation: rotating 1s linear infinite;
     -ms-animation: rotating 1s linear infinite;
     -o-animation: rotating 1s linear infinite;
     animation: rotating 1s linear infinite;
 }
+
 span.recent,
-td.recent{
+td.recent {
     color: #999;
     font-style: italic;
 
 }
-tr.refresh-error{
+
+tr.refresh-error {
     background-color: #f3cece;
     color: #000;
 }
+
 /* preventing too long php version strings*/
-td.php_ver{
+td.php_ver {
     max-width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-table tr:hover{
+
+table tr:hover {
     background-color: #eee;
 }
-table td.actions{
+
+table td.actions {
     text-align: right;
     white-space: nowrap;
 }
-/*filter button*/
-ul.sites-filter>li.uk-first-column>a{
-    border : 1px solid #e5e5e5;
-}
 
 /*preventing flickering when filtering by system*/
-tbody.uk-animation-target{
+tbody.uk-animation-target {
     display: none;
     position: static;
 }
 
-a.disabled{
+a.disabled {
     pointer-events: none;
     opacity: 0.2;
     cursor: not-allowed;
 }
-.licenses{
+
+.licenses {
     padding: 3em;
     text-align: center;
     font-size: 0.6em;
 }
-#progress{
+
+#progress {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     width: 100%;
-    display: none; /*will revealed via js*/
+    display: none;
+    /*will revealed via js*/
 }
-#progressbar{
+
+#progressbar {
     border-radius: 0 !important;
     height: 5px;
     background-color: transparent;
 }
 
+/* datatables */
+.dataTables_filter{
+    display: none;
+}
+th .sort-icon{
+    display: none;
+}
+th.sorting_desc .sort-icon.desc{
+    display: inline;
+}
+th.sorting_asc .sort-icon.asc{
+    display: inline;
+}
+th.sorting_desc,
+th.sorting_asc{
+    font-weight: bold;
+}
+
+.filter-and-search{
+    margin-bottom: 2em;
+}
+
+/*filter button*/
+ul.sites-filter>li{
+    width: 100%;
+    box-sizing: border-box;
+}
+ul.sites-filter>li.uk-first-column>a {
+    border: 1px solid #e5e5e5;
+}
+ul.sites-filter a{
+    font-size: 1em !important;
+}
+
+/* search field */
+.uk-search-default,
+#search_sites{
+    width: 100%;
+}
+#search_sites{
+    height: auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+/* reset filter and search */
+#resetFilterAndSearch{
+    width: 100%;
+    font-size: 1em;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    line-height: 1.5;
+}
 
 /*rotation animation keyframes*/
-@-webkit-keyframes rotating /* Safari & Chrome */ {
-    from {
-      -webkit-transform: rotate(0deg);
-      -o-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    to {
-      -webkit-transform: rotate(360deg);
-      -o-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
-  @keyframes rotating {
-    from {
-      -ms-transform: rotate(0deg);
-      -moz-transform: rotate(0deg);
-      -webkit-transform: rotate(0deg);
-      -o-transform: rotate(0deg);
-      transform: rotate(0deg);
-    }
-    to {
-      -ms-transform: rotate(360deg);
-      -moz-transform: rotate(360deg);
-      -webkit-transform: rotate(360deg);
-      -o-transform: rotate(360deg);
-      transform: rotate(360deg);
-    }
-  }
+@-webkit-keyframes rotating
 
-  /*some improvements to get more sites into viewport*/
-  html{
+/* Safari & Chrome */
+    {
+    from {
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotating {
+    from {
+        -ms-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    to {
+        -ms-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+/*some improvements to get more sites into viewport*/
+html {
     font-size: 14px;
-  }
-  .uk-table td,
-  .uk-table th{
-      padding: 0.5em;
-  }
-  .uk-button{
-      padding: 0 1em;
-      line-height: 2em;
-  }
-  span.uk-icon>svg{
-      width: 1em;
-      height: auto;
-  }
+}
 
-  /*print styles*/
-  @media print{
-    html{
+.uk-table td,
+.uk-table th {
+    padding: 0.5em;
+}
+
+.uk-button {
+    padding: 0 1em;
+    line-height: 2em;
+}
+
+.uk-button span.uk-icon {
+    position: relative;
+    top: -0.1em;
+}
+
+span.uk-icon>svg {
+    width: 1em;
+    height: auto;
+}
+
+/*print styles*/
+@media print {
+    html {
         font-size: 10pt !important;
         padding: 10mm;
     }
-    body{
+
+    body {
         padding: 0;
     }
-    h1{
+
+    h1 {
         font-size: 20pt;
         margin-top: 0;
     }
-    h2{
+
+    h2 {
         font-size: 15pt;
     }
-    .uk-table th{
+
+    .uk-table th {
         font-size: 10pt;
         font-weight: bold;
         padding: 1mm;
     }
-    .uk-table td{
+
+    .uk-table td {
         padding: 1mm;
         font-size: 10pt;
     }
-    td.actions,.uk-button,.licenses{
+
+    td.actions,
+    .uk-button,
+    .licenses {
         display: none !important;
     }
-    .uk-card-body,.uk-card-header{
+
+    .uk-card-body,
+    .uk-card-header {
         padding: 0;
     }
 
-  }
+}

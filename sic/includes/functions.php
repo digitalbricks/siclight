@@ -22,18 +22,22 @@ function ActiveSitesTable($sites){
     // init counter for active sites
     $a = 0;
 
+    // sort icons markup (used with DataTables sorting, made visible/unvisible via CSS)
+    $sort_icons = "<span uk-icon='icon: triangle-down' class='sort-icon asc'></span>\n
+                  <span uk-icon='icon: triangle-up' class='sort-icon desc'></span>";
+
     $table ='';
     if(count($sites)){
         $table.= "<div class='uk-overflow-auto'>\n";
-        $table.= "<table class='sites uk-table uk-table-divider'>\n";
+        $table.= "<table class='sites uk-table uk-table-divider' style='width:100%'>\n"; // NOTE: The inline style for width property is used as helper for DataTables.js
         $table.= " <thead>\n";
         $table.= "    <tr>\n";
-        $table.= "        <th>Name</th>\n";
-        $table.= "        <th>System</th>\n";
-        $table.= "        <th>Sys Ver</th>\n";
-        $table.= "        <th>PHP Ver</th>\n";
-        $table.= "        <th>Sat Ver</th>\n";
-        $table.= "        <th>Refreshed</th>\n";
+        $table.= "        <th>Name {$sort_icons}</th>\n";
+        $table.= "        <th>System {$sort_icons}</th>\n";
+        $table.= "        <th>Sys Ver {$sort_icons}</th>\n";
+        $table.= "        <th>PHP Ver {$sort_icons}</th>\n";
+        $table.= "        <th>Sat Ver {$sort_icons}</th>\n";
+        $table.= "        <th>Refreshed {$sort_icons}</th>\n";
         $table.= "        <td>&nbsp;</td>\n";
         $table.= "    </tr>\n";
         $table.= " </thead>\n";
@@ -75,7 +79,7 @@ function ActiveSitesTable($sites){
         $systems = GetAllSystems();
         $filter ="<ul class=\"sites-filter uk-subnav uk-subnav-pill\" uk-margin>\n
                     <li>\n
-                        <a href=\"#\">Filter <span uk-icon=\"icon:  triangle-down\"></span></a>\n
+                        <a href=\"#\">System Filter <span uk-icon=\"icon:  triangle-down\"></span></a>\n
                         <div uk-dropdown=\"mode: click;\">\n
                             <ul class=\"uk-nav uk-dropdown-nav\">\n
                                 <li class=\"uk-active\" uk-filter-control><a href=\"#\">All Systems</a></li>\n";
@@ -88,7 +92,24 @@ function ActiveSitesTable($sites){
                 </ul>\n";
 
 
-        $outout['table'] = "<div uk-filter=\"target: .js-filter\">\n".$filter.$table."</div>\n";
+        // create wrapping markup for filter and sites search (via DataTables.js)
+        $filter_and_search = "<div class='uk-grid-small filter-and-search' uk-grid>
+                                <div class='uk-width-1-3@s uk-width-1-5@m uk-width-1-5@l'>{$filter}</div>
+                                <div class='uk-width-1-3@s uk-width-2-5@m uk-width-3-5@l'>
+                                    <form class='uk-search uk-search-default'>
+                                        <span class='uk-search-icon-flip' uk-search-icon></span>
+                                        <input class='uk-search-input' id='search_sites' type='search' placeholder='Search Sites' autocomplete='off'>
+                                    </form>
+                                </div>
+                                <div class='uk-width-1-3@s uk-width-2-5@m uk-width-1-5@l'>
+                                    <button uk-filter-control id='resetFilterAndSearch' class='uk-button uk-button-default'>Reset filter &amp; search</button>
+                                </div>
+                            </div>\n";
+                            
+
+
+
+        $outout['table'] = "<div uk-filter=\"target: .js-filter\">\n".$filter_and_search.$table."</div>\n";
         $outout['count'] = $a;
 
         return $outout;
