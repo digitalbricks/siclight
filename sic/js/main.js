@@ -13,7 +13,7 @@ var results = [];
 $(document).ready(function(){
 
     // DataTables, introduced in SIClight v1.7
-    var datatable = $('table.sites').DataTable({
+    SitesDataTable = $('table.sites').DataTable({
         "paging": false, // no pagination
         "bInfo" : false, // no footer info bar
         "order" : [ 0, 'asc' ], // by first column
@@ -26,7 +26,7 @@ $(document).ready(function(){
     // search DataTable from within external search field
     // (not generated via datatables JS)
     $('#search_sites').keyup(function(){
-        datatable.search($(this).val()).draw();
+        SitesDataTable.search($(this).val()).draw();
     })
 
 
@@ -36,7 +36,7 @@ $(document).ready(function(){
     // care about the DataTables Search component
     $('#resetFilterAndSearch').click(function(){
         $('#search_sites').val(''); // empty external search box
-        datatable.search('').draw(); // empty the (hidden) DataTable-native search box
+        SitesDataTable.search('').draw(); // empty the (hidden) DataTable-native search box
     });
 
     
@@ -102,10 +102,10 @@ $(document).ready(function(){
 
         // reset DataTable filter
         // Source: https://datatables.net/plug-ins/api/fnFilterClear
-        datatable.search( '' ).columns().search( '' ).draw();
+        SitesDataTable.search( '' ).columns().search( '' ).draw();
 
         // reset DataTable sort 
-        datatable.order( [ 0, 'asc' ] ).draw();
+        SitesDataTable.order( [ 0, 'asc' ] ).draw();
 
         // trigger click on RESET FILTER & SEARCH button
         // yes ... some of this is redundant, because the
