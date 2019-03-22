@@ -11,6 +11,8 @@ var $results = [];
 // intitiate the requests array
 var $requests = [];
 
+// initiate variable wich is later used to determine
+// if there is a single refresh or a multiple refresh
 var $single_refresh = true;
 
 
@@ -114,18 +116,47 @@ $(document).ready(function(){
     // Refresh all
     $('button.refresh-all').click(function(){
 
-        // reset DataTable filter
-        // Source: https://datatables.net/plug-ins/api/fnFilterClear
-        SitesDataTable.search( '' ).columns().search( '' ).draw();
+        // check if there is a filter or search set,
+        // or if the sort order was changed
+        var $needToReset = false;
+        // -- check if UIkit filter is set
+        if($('ul.sites-filter li.uk-active').attr('uk-filter-control')!=''){
+            $needToReset = true;
+        };
+        // -- check if DataTables search is set
+        if($('#search_sites').val()!=""){
+            $needToReset = true;
+        }
+        // -- check if the sort order was changed (default is [0, "asc"] wich means first column ascending)
+        var $tableSortOrder = JSON.stringify(SitesDataTable.order());
+        if($tableSortOrder != '[0,"asc"]'){
+            $needToReset = true;
+        }
+        // if there is a filter or search present
+        // we need to reset them
+        if($needToReset){
+            // reset DataTable filter
+            // Source: https://datatables.net/plug-ins/api/fnFilterClear
+            SitesDataTable.search( '' ).columns().search( '' ).draw();
 
-        // reset DataTable sort 
-        SitesDataTable.order( [ 0, 'asc' ] ).draw();
+            // reset DataTable sort 
+            SitesDataTable.order( [ 0, 'asc' ] ).draw();
 
-        // trigger click on RESET FILTER & SEARCH button
-        // yes ... some of this is redundant, because the
-        // DataTable search filter is already cleared a few
-        // lines above – but i kept this in place for now
-        $('#resetFilterAndSearch').trigger("click");
+            // trigger click on RESET FILTER & SEARCH button
+            // yes ... some of this is redundant, because the
+            // DataTable search filter is already cleared a few
+            // lines above – but i kept this in place for now
+            $('#resetFilterAndSearch').trigger("click");
+
+            UIkit.notification({
+                message: 'Filter, search and sort order resetted',
+                status: 'primary',
+                pos: 'top-right',
+                timeout: 1000
+            });
+        }
+
+        
 
         // set variable to indicate the refesh all button was clicked
         // we use the window object in order to make it globally accessible
@@ -258,7 +289,7 @@ function RefreshError(response){
 
 function RefreshComplete(response){
     UIkit.notification({
-        message: 'Refresh queue finished.',
+        message: 'Refresh finished.',
         status: 'success',
         pos: 'top-right',
         timeout: 5000
