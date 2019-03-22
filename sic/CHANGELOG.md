@@ -1,5 +1,12 @@
 # Changelog Site Info Center LIGHT
 
+## v1.8
+**22.03.2019**
+* removed AjaxQ plugin wich was used so far for _sequential_ requests
+* now using _simulatinous_ requests to the satellites, making the refresh much faster
+* clearing filter, search and sort order of datatables on refresh-all action only if necessary
+---
+
 ## v1.7
 **18.03.2019**
 * added DataTables.js for searching and sorting the table of active sites
