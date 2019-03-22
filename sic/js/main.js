@@ -9,9 +9,9 @@ var $progressbar = $('#progressbar');
 var $results = [];
 
 // intitiate the requests array
-var requests = [];
+var $requests = [];
 
-window.single_refresh = true;
+var $single_refresh = true;
 
 
 $(document).ready(function(){
@@ -89,14 +89,14 @@ $(document).ready(function(){
 
         // add the request object to the requests array
         // this needed because the WaitForRequestsToFinish() 
-        // function (added in v1.8) holds a promis for the requests
-        requests.push(request);
+        // function (added in v1.8) holds a promis for the $requests
+        $requests.push(request);
 
         // if this is a single refresh (no click on refresh-all or refresh-filterd)
         // we execute the WaitForRequestsToFinish() wich starts the RefreshComplete()
-        // function (wich does e.g. status bar handling) and resets the requests array;
-        if(window.single_refresh){
-            WaitForRequestsToFinish(requests);
+        // function (wich does e.g. status bar handling) and resets the $requests array;
+        if($single_refresh){
+            WaitForRequestsToFinish($requests);
         }
 
         // increase ajax queue item total counter
@@ -132,7 +132,7 @@ $(document).ready(function(){
         window.refreshed_all = true;
 
         // set variable to indicate this is NOT a single refresh
-        window.single_refresh = false;
+        $single_refresh = false;
 
         // trigger the refresh buttons
         $('button.refresh').each(function(){
@@ -140,14 +140,14 @@ $(document).ready(function(){
         });
 
         // check if all ajax requests completed
-        WaitForRequestsToFinish(requests);
+        WaitForRequestsToFinish($requests);
     });
 
 
     // Refresh filtered sites (via DataTables)
     $('button.refresh-selected').click(function(){
         // set variable to indicate this is NOT a single refresh
-        window.single_refresh = false;
+        $single_refresh = false;
 
 
         // only trigger visible (non-filtered) elements
@@ -158,7 +158,7 @@ $(document).ready(function(){
         });
 
         // check if all ajax requests completed
-        WaitForRequestsToFinish(requests);
+        WaitForRequestsToFinish($requests);
     });
 
 
@@ -325,15 +325,15 @@ function submitResultsToSummaryWriter(){
 
 
 
-function WaitForRequestsToFinish(requests){
-    Promise.all(requests).then(response => {
+function WaitForRequestsToFinish($requests){
+    Promise.all($requests).then(response => {
         // call function when all request completed
         RefreshComplete(response); 
         
         // reset requests array
-        requests = [];
+        $requests = [];
 
         // reset variable to false
-        window.single_refresh = true;
+        $single_refresh = true;
     });
 }
