@@ -94,7 +94,6 @@ $siclight_version = "1.8 BETA";
     </div>
 
     <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/jquery.ajaxq.js"></script>
     <script src="js/uikit.min.js"></script>
     <script src="js/uikit-icons.min.js"></script>
     <script src="js/datatables.min.js"></script>

@@ -6,7 +6,7 @@ var $queue_items_processed = 0;
 var $progressbar = $('#progressbar');
 
 // initiate results array that will store all responses
-var $results = [];
+var results = [];
 
 // intitiate the requests array
 var requests = [];
@@ -210,11 +210,11 @@ function RefreshSuccess(response){
     // update progressbar current value
     $progressbar.attr( "value", $queue_items_processed );
 
-    // push response into $results array
+    // push response into results array
     // -- but first add date and time
     response['date'] = germandate;
     response['time'] = germantime;
-    $results.push(response);
+    results.push(response);
 };
 
 function RefreshError(response){
@@ -244,9 +244,9 @@ function RefreshError(response){
     // update progressbar current value
     $progressbar.attr( "value", $queue_items_processed );
 
-    // push error messages into $results array
-    // because we use the $results array to create a CSV summary later
-    $results.push({
+    // push error messages into results array
+    // because we use the results array to create a CSV summary later
+    results.push({
         'php_ver' : 'n/a',
         'sat_ver' : 'n/a',
         'site_id' : response['site_id'],
@@ -257,51 +257,47 @@ function RefreshError(response){
 }
 
 function RefreshComplete(response){
-    // if ajax queue completed and display notification
-    // if queue completed
-    if($.ajaxq.isRunning('MainQueue') != true){
-        UIkit.notification({
-            message: 'Refresh queue finished.',
-            status: 'success',
-            pos: 'top-right',
-            timeout: 5000
-        });
-        // write info to console
-        console.info('Refresh queue finished.');
+    UIkit.notification({
+        message: 'Refresh queue finished.',
+        status: 'success',
+        pos: 'top-right',
+        timeout: 5000
+    });
+    // write info to console
+    console.info('Refresh queue finished.');
 
-        // remove .disabled class from history links
-        $('a.history').each(function(){
-            $(this).removeClass('disabled');
-        });
+    // remove .disabled class from history links
+    $('a.history').each(function(){
+        $(this).removeClass('disabled');
+    });
 
-        // reset ajax queue item counter
-        $queue_items_total = 0;
-        $queue_items_processed = 0;
-        $('#progress').delay(500).slideUp();
-        setTimeout(function(){
-            $progressbar.delay(1000).attr( "value", 0 );
-            $progressbar.delay(1000).attr( "max", 100 );
-        }, 1000);
+    // reset ajax queue item counter
+    $queue_items_total = 0;
+    $queue_items_processed = 0;
+    $('#progress').delay(500).slideUp();
+    setTimeout(function(){
+        $progressbar.delay(1000).attr( "value", 0 );
+        $progressbar.delay(1000).attr( "max", 100 );
+    }, 1000);
 
-        // submit results to summary writer
-        submitResultsToSummaryWriter();
+    // submit results to summary writer
+    submitResultsToSummaryWriter();
 
-        // update DataTable (causing e.g. re-sort with new data)
-        SitesDataTable.rows().invalidate();
-        SitesDataTable.draw();
-    }
+    // update DataTable (causing e.g. re-sort with new data)
+    SitesDataTable.rows().invalidate();
+    SitesDataTable.draw();
 }
 
 
 function submitResultsToSummaryWriter(){
     // check if refresh all button was activated
     if(typeof window.refreshed_all !== 'undefined' && window.refreshed_all == true){
-        //console.log($results);
+        //console.log(results);
 
-        // send $results to summarywriter
+        // send results to summarywriter
         $.ajax({
             type: "POST",
-            data: JSON.stringify($results),
+            data: JSON.stringify(results),
             url: "connector/summarywriter.php",
             success: function(msg){
                 // notiy that summary is available
@@ -321,8 +317,8 @@ function submitResultsToSummaryWriter(){
     // reset variable to false
     window.refreshed_all = false;
 
-    // reset $results array
-    $results =[];
+    // reset results
+    results =[];
 }
 
 
@@ -330,7 +326,7 @@ function submitResultsToSummaryWriter(){
 
 
 function WaitForRequestsToFinish(requests){
-    Promise.all(requests).then(response => { 
+    Promise.all(requests).then(response => {
         // call function when all request completed
         RefreshComplete(response); 
         
