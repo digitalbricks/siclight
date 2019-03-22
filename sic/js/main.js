@@ -6,10 +6,12 @@ var $queue_items_processed = 0;
 var $progressbar = $('#progressbar');
 
 // initiate results array that will store all responses
-var results = [];
+var $results = [];
 
 // intitiate the requests array
 var requests = [];
+
+window.single_refresh = true;
 
 
 $(document).ready(function(){
@@ -71,7 +73,7 @@ $(document).ready(function(){
           site_name: $site_name
         };
 
-        // NEW
+        // instantiate object for ajax request
         var request = $.ajax ({
             url: 'connector/proxy.php',
             type: 'post',
@@ -84,7 +86,18 @@ $(document).ready(function(){
                 RefreshError(response);
             }
         });
+
+        // add the request object to the requests array
+        // this needed because the WaitForRequestsToFinish() 
+        // function (added in v1.8) holds a promis for the requests
         requests.push(request);
+
+        // if this is a single refresh (no click on refresh-all or refresh-filterd)
+        // we execute the WaitForRequestsToFinish() wich starts the RefreshComplete()
+        // function (wich does e.g. status bar handling) and resets the requests array;
+        if(window.single_refresh){
+            WaitForRequestsToFinish(requests);
+        }
 
         // increase ajax queue item total counter
         $queue_items_total++;
@@ -118,14 +131,25 @@ $(document).ready(function(){
         // we use the window object in order to make it globally accessible
         window.refreshed_all = true;
 
+        // set variable to indicate this is NOT a single refresh
+        window.single_refresh = false;
+
+        // trigger the refresh buttons
         $('button.refresh').each(function(){
             $(this).trigger("click");
         });
+
+        // check if all ajax requests completed
+        WaitForRequestsToFinish(requests);
     });
 
 
     // Refresh filtered sites (via DataTables)
     $('button.refresh-selected').click(function(){
+        // set variable to indicate this is NOT a single refresh
+        window.single_refresh = false;
+
+
         // only trigger visible (non-filtered) elements
         // NOTE: the "tr:visible" prefix is not necessary for DataTables
         // but for the CMS filter
@@ -134,10 +158,7 @@ $(document).ready(function(){
         });
 
         // check if all ajax requests completed
-        Promise.all(requests).then(response => { 
-            RefreshComplete(response); 
-            requests = [];
-        });
+        WaitForRequestsToFinish(requests);
     });
 
 
@@ -189,11 +210,11 @@ function RefreshSuccess(response){
     // update progressbar current value
     $progressbar.attr( "value", $queue_items_processed );
 
-    // push response into results array
+    // push response into $results array
     // -- but first add date and time
     response['date'] = germandate;
     response['time'] = germantime;
-    results.push(response);
+    $results.push(response);
 };
 
 function RefreshError(response){
@@ -223,9 +244,9 @@ function RefreshError(response){
     // update progressbar current value
     $progressbar.attr( "value", $queue_items_processed );
 
-    // push error messages into results array
-    // because we use the results array to create a CSV summary later
-    results.push({
+    // push error messages into $results array
+    // because we use the $results array to create a CSV summary later
+    $results.push({
         'php_ver' : 'n/a',
         'sat_ver' : 'n/a',
         'site_id' : response['site_id'],
@@ -275,12 +296,12 @@ function RefreshComplete(response){
 function submitResultsToSummaryWriter(){
     // check if refresh all button was activated
     if(typeof window.refreshed_all !== 'undefined' && window.refreshed_all == true){
-        //console.log(results);
+        //console.log($results);
 
-        // send results to summarywriter
+        // send $results to summarywriter
         $.ajax({
             type: "POST",
-            data: JSON.stringify(results),
+            data: JSON.stringify($results),
             url: "connector/summarywriter.php",
             success: function(msg){
                 // notiy that summary is available
@@ -300,16 +321,23 @@ function submitResultsToSummaryWriter(){
     // reset variable to false
     window.refreshed_all = false;
 
-    // reset results
-    results =[];
+    // reset $results array
+    $results =[];
 }
 
 
 
 
 
-/*
-Promise.all(p).then(response => { 
-    RefreshComplete(response); 
-});
-*/
+function WaitForRequestsToFinish(requests){
+    Promise.all(requests).then(response => { 
+        // call function when all request completed
+        RefreshComplete(response); 
+        
+        // reset requests array
+        requests = [];
+
+        // reset variable to false
+        window.single_refresh = true;
+    });
+}
