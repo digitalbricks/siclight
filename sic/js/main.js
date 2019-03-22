@@ -8,6 +8,8 @@ var $progressbar = $('#progressbar');
 // initiate results array that will store all responses
 var results = [];
 
+// intitiate the requests array
+var requests = [];
 
 
 $(document).ready(function(){
@@ -69,7 +71,8 @@ $(document).ready(function(){
           site_name: $site_name
         };
 
-        $.ajaxq ('MainQueue', {
+        // NEW
+        var request = $.ajax ({
             url: 'connector/proxy.php',
             type: 'post',
             dataType: 'json',
@@ -79,11 +82,9 @@ $(document).ready(function(){
             },
             error: function (response) {
                 RefreshError(response);
-            },
-            complete: function (response) {
-                RefreshComplete(response);
             }
         });
+        requests.push(request);
 
         // increase ajax queue item total counter
         $queue_items_total++;
@@ -122,6 +123,7 @@ $(document).ready(function(){
         });
     });
 
+
     // Refresh filtered sites (via DataTables)
     $('button.refresh-selected').click(function(){
         // only trigger visible (non-filtered) elements
@@ -129,6 +131,12 @@ $(document).ready(function(){
         // but for the CMS filter
         $('tr:visible button.refresh').each(function(){
             $(this).trigger("click");
+        });
+
+        // check if all ajax requests completed
+        Promise.all(requests).then(response => { 
+            RefreshComplete(response); 
+            requests = [];
         });
     });
 
@@ -295,3 +303,13 @@ function submitResultsToSummaryWriter(){
     // reset results
     results =[];
 }
+
+
+
+
+
+/*
+Promise.all(p).then(response => { 
+    RefreshComplete(response); 
+});
+*/
