@@ -1,2 +1,3 @@
 sic/sites-config.php
 sic/history/*.csv
+.DS_Store
