@@ -36,7 +36,7 @@ $sat_secret = "YOUR_SECRET";
 /*--- SATELLITE (no need for changes)------------------------*/
 // satellite version: The current version of the satellite
 // Will be displayed in your SIC
-$siteinfo['sat_ver'] = "0.14";
+$siteinfo['sat_ver'] = "0.15";
 
 /**
 * see CHANGELOG.md for changes history
@@ -101,7 +101,10 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
             break;
         case "CONCRETE5":
             $siteinfo['sys_ver'] = sat_CONCRETE5();
-            break;               
+            break;
+        case "NEXTCLOUD":
+            $siteinfo['sys_ver'] = sat_NEXTCLOUD();
+            break;                
         default:
             http_response_code(400);
             echo "System not valid.";
@@ -365,4 +368,13 @@ function sat_GETSIMPLE(){
     require_once('admin/inc/basic.php');
     require_once('admin/inc/configuration.php');
     return $site_version_no;
+}
+
+/**
+ * sat_NEXTCLOUD
+ * Gets version of NextCloud
+ */
+function sat_NEXTCLOUD(){
+    require_once('version.php');
+    return $OC_VersionString;
 }
