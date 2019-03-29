@@ -52,7 +52,7 @@ If you are done, place the `/sic` folder (you may rename it, of course) on your 
 
 ### Currently supported CMS
 
-| System identifier | CMS                                    | available since satellite version |
+| System identifier | CMS / System                           | available since satellite version |
 |-------------------|----------------------------------------|-----------------------------------|
 | STATIC            | (static site, just return PHP version) | v0.1                              |
 | LEPTON            | Lepton CMS, below version 2.4          | v0.1                              |
@@ -69,7 +69,8 @@ If you are done, place the `/sic` folder (you may rename it, of course) on your 
 | JOOMLA            | Joomla! CMS, tested with  3.6 & 3.8.2  | v0.11                             |
 | CONCRETE5         | Concrete5 CMS, tested w. 8.1.0 & 8.2.1 | v0.12                             |
 | JOOMLA15          | legacy Joomla! CMS v1.5                | v0.13                             |
-| NEXTCLOUD         | NextCloud (yes, it's not a CMS ...)    | v0.15                             |
+| NEXTCLOUD         | NextCloud                              | v0.15                             |
+| PIWIK             | PIWIK / Matomo, tested with 3.9.1      | v0.16                             |
 
 ## Configuration: Satellite 
 Place a copy of the `satellite.php` (to be found in folder `/satellite` in the download) in the root directory of all your configured sites via FTP.  Update the `$sat_secret` in the satellite to the one you configured for the corresponding site in SIC (don’t use the same secret across all your sites!) and make sure the satellite has a function for your CMS (if not, read the section “Add further CMS functions to satellite”).  You are done.

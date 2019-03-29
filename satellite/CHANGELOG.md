@@ -1,5 +1,10 @@
 # Changelog Satellite
 
+## v0.16
+**29.03.2019**
+* added sat_PIWIK() for PIWIK / Matomo installations, tested with 3.9.1
+---
+
 ## v0.15
 **28.03.2019**
 * added sat_NEXTCLOUD() for NEXTCLOUD installations, tested with 14.0.4

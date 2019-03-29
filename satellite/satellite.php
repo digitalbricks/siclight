@@ -36,7 +36,7 @@ $sat_secret = "YOUR_SECRET";
 /*--- SATELLITE (no need for changes)------------------------*/
 // satellite version: The current version of the satellite
 // Will be displayed in your SIC
-$siteinfo['sat_ver'] = "0.15";
+$siteinfo['sat_ver'] = "0.16";
 
 /**
 * see CHANGELOG.md for changes history
@@ -104,7 +104,10 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
             break;
         case "NEXTCLOUD":
             $siteinfo['sys_ver'] = sat_NEXTCLOUD();
-            break;                
+            break;
+        case "PIWIK":
+            $siteinfo['sys_ver'] = sat_PIWIK();
+            break;                 
         default:
             http_response_code(400);
             echo "System not valid.";
@@ -377,4 +380,14 @@ function sat_GETSIMPLE(){
 function sat_NEXTCLOUD(){
     require_once('version.php');
     return $OC_VersionString;
+}
+
+/**
+ * sat_PIWIK
+ * Gets version of PIWIK / Matomo
+ */
+function sat_PIWIK(){
+    require_once('core/Version.php');
+    $version = new Piwik\Version;
+    return $version::VERSION;
 }
