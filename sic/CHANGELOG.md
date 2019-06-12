@@ -1,5 +1,10 @@
 # Changelog Site Info Center LIGHT
 
+## v1.9
+**12.06.2019**
+* fixed an issue where js RefreshComplete() and resets does not fire when a request fails (because Promise.all is not fullfilled)
+---
+
 ## v1.8
 **22.03.2019**
 * removed AjaxQ plugin wich was used so far for _sequential_ requests

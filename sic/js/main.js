@@ -355,9 +355,14 @@ function submitResultsToSummaryWriter(){
 
 
 
-
 function WaitForRequestsToFinish($requests){
-    Promise.all($requests).then(response => {
+    // Note the .map(reflect) – wich causes the reflect() function
+    // to be applied on each elements in the $requests array.
+    // The reflect() function in turn causes Promise.all to be
+    // fullfilled even if there was an error (wich would Promise.all
+    // to not trigger usually)
+    // See definition of reflect() function for source of this solution.
+    Promise.all($requests.map(reflect)).then(response => {
         // call function when all request completed
         RefreshComplete(response); 
         
@@ -367,4 +372,15 @@ function WaitForRequestsToFinish($requests){
         // reset variable to false
         $single_refresh = true;
     });
+}
+
+
+/* A helper function used in WaitForRequestsToFinish() Promis.all
+ * in order to execute the RefreshComplete() function and the resets
+ * even if there was an error during satellite fetching.
+ * Source: https://stackoverflow.com/questions/31424561/wait-until-all-es6-promises-complete-even-rejected-promises/31424853#31424853
+ */
+function reflect(promise) {
+    return promise.then(function (v) { return { v: v, status: "resolved" } },
+        function (e) { return { e: e, status: "rejected" } });
 }
