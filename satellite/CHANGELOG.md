@@ -1,4 +1,8 @@
 # Changelog Satellite
+## v0.17
+**02.08.2019**
+* added sat_JTLSHOP() for JTL-Shop installations, tested with 4.06 (Build 9)
+---
 
 ## v0.16
 **29.03.2019**

@@ -36,7 +36,7 @@ $sat_secret = "YOUR_SECRET";
 /*--- SATELLITE (no need for changes)------------------------*/
 // satellite version: The current version of the satellite
 // Will be displayed in your SIC
-$siteinfo['sat_ver'] = "0.16";
+$siteinfo['sat_ver'] = "0.17";
 
 /**
 * see CHANGELOG.md for changes history
@@ -107,7 +107,10 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
             break;
         case "PIWIK":
             $siteinfo['sys_ver'] = sat_PIWIK();
-            break;                 
+            break;
+        case "JTLSHOP":
+            $siteinfo['sys_ver'] = sat_JTLSHOP();
+            break;                  
         default:
             http_response_code(400);
             echo "System not valid.";
@@ -390,4 +393,13 @@ function sat_PIWIK(){
     require_once('core/Version.php');
     $version = new Piwik\Version;
     return $version::VERSION;
+}
+
+/**
+ * sat_JTLSHOP
+ * Gets version of JTL-Shop
+ */
+function sat_JTLSHOP(){
+    require_once('includes/defines_inc.php');
+    return (JTL_VERSION / 100)." (Build: ".JTL_MINOR_VERSION.")";
 }

@@ -71,6 +71,7 @@ If you are done, place the `/sic` folder (you may rename it, of course) on your 
 | JOOMLA15          | legacy Joomla! CMS v1.5                | v0.13                             |
 | NEXTCLOUD         | NextCloud                              | v0.15                             |
 | PIWIK             | PIWIK / Matomo, tested with 3.9.1      | v0.16                             |
+| JTLSHOP           | JTL-Shop, tested with 4.06 Build 9     | v0.17                             |
 
 ## Configuration: Satellite 
 Place a copy of the `satellite.php` (to be found in folder `/satellite` in the download) in the root directory of all your configured sites via FTP.  Update the `$sat_secret` in the satellite to the one you configured for the corresponding site in SIC (don’t use the same secret across all your sites!) and make sure the satellite has a function for your CMS (if not, read the section “Add further CMS functions to satellite”).  You are done.
