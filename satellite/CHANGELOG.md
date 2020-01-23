@@ -1,4 +1,9 @@
 # Changelog Satellite
+## v0.18
+**23.01.2020**
+* added sat_MODIFIEDSHOP() for modified eCommerce Shop,tested with 2.0.3.0
+---
+
 ## v0.17
 **02.08.2019**
 * added sat_JTLSHOP() for JTL-Shop installations, tested with 4.06 (Build 9)

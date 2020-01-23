@@ -52,26 +52,27 @@ If you are done, place the `/sic` folder (you may rename it, of course) on your 
 
 ### Currently supported CMS
 
-| System identifier | CMS / System                           | available since satellite version |
-|-------------------|----------------------------------------|-----------------------------------|
-| STATIC            | (static site, just return PHP version) | v0.1                              |
-| LEPTON            | Lepton CMS, below version 2.4          | v0.1                              |
-| WEBSITEBAKER      | WebsiteBaker                           | v0.2                              |
-| WORDPRESS         | WordPress                              | v0.3                              |
-| WBCE              | WBCE                                   | v0.4                              |
-| PROCESSWIRE       | ProcessWire                            | v0.5                              |
-| MODX              | MODX Revolution                        | v0.6                              |
-| GETSIMPLE         | GetSimple CMS                          | v0.7                              |
-| LEPTON24          | Lepton CMS, since version 2.4          | v0.8                              |
-| SHOPWARE          | Shopware, since version 5              | v0.9                              |
-| PAGEKIT           | Pagekit, since version 1               | v0.9                              |
-| BLACKCAT          | BlackCat CMS, 1.x series               | v0.10                             |
-| JOOMLA            | Joomla! CMS, tested with  3.6 & 3.8.2  | v0.11                             |
-| CONCRETE5         | Concrete5 CMS, tested w. 8.1.0 & 8.2.1 | v0.12                             |
-| JOOMLA15          | legacy Joomla! CMS v1.5                | v0.13                             |
-| NEXTCLOUD         | NextCloud                              | v0.15                             |
-| PIWIK             | PIWIK / Matomo, tested with 3.9.1      | v0.16                             |
-| JTLSHOP           | JTL-Shop, tested with 4.06 Build 9     | v0.17                             |
+| System identifier | CMS / System                                  | available since satellite version |
+|-------------------|-----------------------------------------------|-----------------------------------|
+| STATIC            | (static site, just return PHP version)        | v0.1                              |
+| LEPTON            | Lepton CMS, below version 2.4                 | v0.1                              |
+| WEBSITEBAKER      | WebsiteBaker                                  | v0.2                              |
+| WORDPRESS         | WordPress                                     | v0.3                              |
+| WBCE              | WBCE                                          | v0.4                              |
+| PROCESSWIRE       | ProcessWire                                   | v0.5                              |
+| MODX              | MODX Revolution                               | v0.6                              |
+| GETSIMPLE         | GetSimple CMS                                 | v0.7                              |
+| LEPTON24          | Lepton CMS, since version 2.4                 | v0.8                              |
+| SHOPWARE          | Shopware, since version 5                     | v0.9                              |
+| PAGEKIT           | Pagekit, since version 1                      | v0.9                              |
+| BLACKCAT          | BlackCat CMS, 1.x series                      | v0.10                             |
+| JOOMLA            | Joomla! CMS, tested with  3.6 & 3.8.2         | v0.11                             |
+| CONCRETE5         | Concrete5 CMS, tested w. 8.1.0 & 8.2.1        | v0.12                             |
+| JOOMLA15          | legacy Joomla! CMS v1.5                       | v0.13                             |
+| NEXTCLOUD         | NextCloud                                     | v0.15                             |
+| PIWIK             | PIWIK / Matomo, tested with 3.9.1             | v0.16                             |
+| JTLSHOP           | JTL-Shop, tested with 4.06 Build 9            | v0.17                             |
+| MODIFIEDSHOP      | modified eCommerce Shop, tested with 2.0.3.0  | v0.18                             |
 
 ## Configuration: Satellite 
 Place a copy of the `satellite.php` (to be found in folder `/satellite` in the download) in the root directory of all your configured sites via FTP.  Update the `$sat_secret` in the satellite to the one you configured for the corresponding site in SIC (don’t use the same secret across all your sites!) and make sure the satellite has a function for your CMS (if not, read the section “Add further CMS functions to satellite”).  You are done.
