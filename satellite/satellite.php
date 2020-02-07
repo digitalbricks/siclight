@@ -36,7 +36,7 @@ $sat_secret = "YOUR_SECRET";
 /*--- SATELLITE (no need for changes)------------------------*/
 // satellite version: The current version of the satellite
 // Will be displayed in your SIC
-$siteinfo['sat_ver'] = "0.18";
+$siteinfo['sat_ver'] = "0.19";
 
 /**
 * see CHANGELOG.md for changes history
@@ -56,6 +56,9 @@ if(isset($_POST['sys']) AND isset($_POST['secret']) AND $_POST['sys']!='' AND $_
     // everything seems to be fine, let's proceed ...
     // Determine wich function has to be called
     switch ($_POST['sys']) {
+        case "LEPTON4":
+            $siteinfo['sys_ver'] = sat_LEPTON4();
+            break;
         case "LEPTON24":
             $siteinfo['sys_ver'] = sat_LEPTON24();
             break;
@@ -223,6 +226,16 @@ function sat_SHOPWARE(){
     $kernel = new \Shopware\Kernel($environment, $environment !== 'production');
 
     return $kernel::VERSION;
+}
+
+/**
+ * sat_LEPTON4
+ * Gets version of LEPTON CMS since version 4.x
+ */
+function sat_LEPTON4(){
+    require_once(dirname(__FILE__).'/config/config.php');
+    $oLEPTON = new LEPTON_frontend();
+    return LEPTON_VERSION;
 }
 
 

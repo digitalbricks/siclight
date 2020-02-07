@@ -73,6 +73,7 @@ If you are done, place the `/sic` folder (you may rename it, of course) on your 
 | PIWIK             | PIWIK / Matomo, tested with 3.9.1             | v0.16                             |
 | JTLSHOP           | JTL-Shop, tested with 4.06 Build 9            | v0.17                             |
 | MODIFIEDSHOP      | modified eCommerce Shop, tested with 2.0.3.0  | v0.18                             |
+| LEPTON4           | Lepton CMS, since version 4.x                 | v0.19                              |
 
 ## Configuration: Satellite 
 Place a copy of the `satellite.php` (to be found in folder `/satellite` in the download) in the root directory of all your configured sites via FTP.  Update the `$sat_secret` in the satellite to the one you configured for the corresponding site in SIC (don’t use the same secret across all your sites!) and make sure the satellite has a function for your CMS (if not, read the section “Add further CMS functions to satellite”).  You are done.

@@ -1,4 +1,9 @@
 # Changelog Satellite
+## v0.19
+**07.02.2020**
+* added sat_LEPTON4() for LEPTON CMS since version 4,tested with 4.5.0
+---
+
 ## v0.18
 **23.01.2020**
 * added sat_MODIFIEDSHOP() for modified eCommerce Shop,tested with 2.0.3.0
