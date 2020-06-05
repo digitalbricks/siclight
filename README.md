@@ -1,5 +1,9 @@
 # Site Info Center LIGHT
-**Getting information about sites CMS and PHP versions with one click.**
+**IMPORTANT: There is a new Version of Site Info Center LIGHT available – [Site Info Center LIGHT 2](https://github.com/digitalbricks/siclight2). So the version in this repository (v1) will not longer be maintained (but will still work).**
+
+**I also decided to move the satellite script, formerly to be found here, in a [separate repository](https://github.com/digitalbricks/sic-satellite) – in order take care of different version numbers (Site Info Center vs. satellite) and some kind of different purposes.**
+
+---
 
 _NOTE: A version of this text in german language, alongside with some screenshots, can be found on my blog: [ https://www.vektorkneter.de/site-information-center-light]( https://www.vektorkneter.de/site-information-center-light)_
 
